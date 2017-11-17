@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_photos"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </android.support.v7.widget.RecyclerView>
+
+    <com.woolf.cleanapp.util.view.ProgressView
+        android:id="@+id/pv_load_photos"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:pv_error_text="Error"
+        app:pv_error_text_color="@color/black"
+        app:pv_error_text_margin_bottom="8dp"
+        app:pv_error_text_margin_end="64dp"
+        app:pv_error_text_margin_start="64dp"
+        app:pv_pb_color="@color/colorAccent"
+        app:pv_retry_button_background="@drawable/selector_retry_button"
+        app:pv_retry_button_text="Retry"
+        app:pv_retry_button_height="40dp"
+        app:pv_retry_button_text_color="@color/white"
+        app:pv_state="complete"/>
+
+
+</android.support.constraint.ConstraintLayout>

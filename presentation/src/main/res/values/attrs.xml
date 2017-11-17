@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="ProgressView">
+        <attr name="pv_state">
+            <enum name="progress" value="0"/>
+            <enum name="error" value="1"/>
+            <enum name="complete" value="2"/>
+        </attr>
+        <attr name="pv_background_color" format="color"/>
+        <attr name="pv_pb_size" format="dimension"/>
+        <attr name="pv_pb_color" format="color"/>
+
+        <attr name="pv_error_text_color" format="color"/>
+        <attr name="pv_error_text" format="string"/>
+        <attr name="pv_error_text_size" format="dimension"/>
+        <attr name="pv_error_text_margin_start" format="dimension"/>
+        <attr name="pv_error_text_margin_end" format="dimension"/>
+        <attr name="pv_error_text_margin_bottom" format="dimension"/>
+        <attr name="pv_error_text_margin_top" format="dimension"/>
+
+        <attr name="pv_retry_button_width" format="dimension"/>
+        <attr name="pv_retry_button_height" format="dimension"/>
+        <attr name="pv_retry_button_text_color" format="color"/>
+        <attr name="pv_retry_button_text" format="string"/>
+        <attr name="pv_retry_button_text_size" format="dimension"/>
+        <attr name="pv_retry_button_margin_start" format="dimension"/>
+        <attr name="pv_retry_button_margin_end" format="dimension"/>
+        <attr name="pv_retry_button_margin_top" format="dimension"/>
+        <attr name="pv_retry_button_margin_bottom" format="dimension"/>
+
+        <attr name="pv_retry_button_background" format="reference"/>
+
+
+    </declare-styleable>
+</resources>
