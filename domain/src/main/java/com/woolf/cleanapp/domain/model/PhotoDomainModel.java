@@ -12,6 +12,8 @@ public class PhotoDomainModel implements Serializable {
     private String description;
     private UserDomainModel user;
     private UrlsDomainModel urls;
+    private ExifDomainModel exif;
+    private LocationDomainModel location;
 
     public String getId() {
         return id;
@@ -67,5 +69,21 @@ public class PhotoDomainModel implements Serializable {
 
     public void setUrls(UrlsDomainModel urls) {
         this.urls = urls;
+    }
+
+    public ExifDomainModel getExif() {
+        return exif;
+    }
+
+    public void setExif(ExifDomainModel exif) {
+        this.exif = exif;
+    }
+
+    public LocationDomainModel getLocation() {
+        return location;
+    }
+
+    public void setLocation(LocationDomainModel location) {
+        this.location = location;
     }
 }

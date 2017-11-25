@@ -1,3 +1,18 @@
 <resources>
     <string name="app_name">CleanApp</string>
+    <string name="menu_home">Home</string>
+    <string name="menu_favorites">Favorites</string>
+    <string name="menu_info">Info</string>
+    <string name="label_no_data">No Data</string>
+    <string name="label_image_info">Image info</string>
+    <string name="label_dimensions">Dimensions:</string>
+    <string name="label_camera_make">Camera Make:</string>
+    <string name="label_camera_model">Camera Model:</string>
+    <string name="label_focal_length">Focal Length:</string>
+    <string name="label_aperture">Aperture:</string>
+    <string name="label_shutter_speed">Shutter Speed:</string>
+    <string name="label_iso">ISO:</string>
+    <string name="label_location">Location</string>
+    <string name="label_country">Country:</string>
+    <string name="label_city">City:</string>
 </resources>

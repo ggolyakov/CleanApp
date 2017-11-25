@@ -11,4 +11,8 @@ import io.reactivex.Flowable;
 public interface IPhotoRepository {
 
     Flowable<List<PhotoDomainModel>> getPhotos(Map<String, String> params);
+
+    Flowable<List<PhotoDomainModel>> getFavorites();
+
+    Flowable<PhotoDomainModel> getPhotoById(String id, Map<String, String> params);
 }

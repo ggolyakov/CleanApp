@@ -26,6 +26,12 @@ public class PhotoEntity {
     @SerializedName("color")
     @Expose
     private String color;
+    @SerializedName("exif")
+    @Expose
+    private ExifEntity exif;
+    @SerializedName("location")
+    @Expose
+    private LocationEntity location;
     @SerializedName("likes")
     @Expose
     private Integer likes;
@@ -56,19 +62,19 @@ public class PhotoEntity {
         this.id = id;
     }
 
-    public String getCreated_at() {
+    public String getCreatedAt() {
         return created_at;
     }
 
-    public void setCreated_at(String created_at) {
+    public void setCreatedAt(String created_at) {
         this.created_at = created_at;
     }
 
-    public String getUpdated_at() {
+    public String getUpdatedAt() {
         return updated_at;
     }
 
-    public void setUpdated_at(String updated_at) {
+    public void setUpdatedAt(String updated_at) {
         this.updated_at = updated_at;
     }
 
@@ -104,11 +110,11 @@ public class PhotoEntity {
         this.likes = likes;
     }
 
-    public Boolean getLiked_by_user() {
+    public Boolean getLikedByUser() {
         return liked_by_user;
     }
 
-    public void setLiked_by_user(Boolean liked_by_user) {
+    public void setLikedByUser(Boolean liked_by_user) {
         this.liked_by_user = liked_by_user;
     }
 
@@ -152,4 +158,19 @@ public class PhotoEntity {
         this.links = links;
     }
 
+    public ExifEntity getExif() {
+        return exif;
+    }
+
+    public void setExif(ExifEntity exif) {
+        this.exif = exif;
+    }
+
+    public LocationEntity getLocation() {
+        return location;
+    }
+
+    public void setLocation(LocationEntity location) {
+        this.location = location;
+    }
 }

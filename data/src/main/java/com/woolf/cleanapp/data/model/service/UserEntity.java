@@ -76,11 +76,11 @@ public class UserEntity {
         this.name = name;
     }
 
-    public String getPortfolio_url() {
+    public String getPortfolioUrl() {
         return portfolio_url;
     }
 
-    public void setPortfolio_url(String portfolio_url) {
+    public void setPortfolioUrl(String portfolio_url) {
         this.portfolio_url = portfolio_url;
     }
 
@@ -100,35 +100,35 @@ public class UserEntity {
         this.location = location;
     }
 
-    public Integer getTotal_likes() {
+    public Integer getTotalLikes() {
         return total_likes;
     }
 
-    public void setTotal_likes(Integer total_likes) {
+    public void setTotalLikes(Integer total_likes) {
         this.total_likes = total_likes;
     }
 
-    public Integer getTotal_photos() {
+    public Integer getTotalPhotos() {
         return total_photos;
     }
 
-    public void setTotal_photos(Integer total_photos) {
+    public void setTotalPhotos(Integer total_photos) {
         this.total_photos = total_photos;
     }
 
-    public Integer getTotal_collections() {
+    public Integer getTotalCollections() {
         return total_collections;
     }
 
-    public void setTotal_collections(Integer total_collections) {
+    public void setTotalCollections(Integer total_collections) {
         this.total_collections = total_collections;
     }
 
-    public ProfileImageEntity getProfile_image() {
+    public ProfileImageEntity getProfileImage() {
         return profile_image;
     }
 
-    public void setProfile_image(ProfileImageEntity profile_image) {
+    public void setProfileImage(ProfileImageEntity profile_image) {
         this.profile_image = profile_image;
     }
 
@@ -140,35 +140,35 @@ public class UserEntity {
         this.links = links;
     }
 
-    public String getUpdated_at() {
+    public String getUpdatedAt() {
         return updated_at;
     }
 
-    public void setUpdated_at(String updated_at) {
+    public void setUpdatedAt(String updated_at) {
         this.updated_at = updated_at;
     }
 
-    public String getFirst_name() {
+    public String getFirstName() {
         return first_name;
     }
 
-    public void setFirst_name(String first_name) {
+    public void setFirstName(String first_name) {
         this.first_name = first_name;
     }
 
-    public String getLast_name() {
+    public String getLastName() {
         return last_name;
     }
 
-    public void setLast_name(String last_name) {
+    public void setLastName(String last_name) {
         this.last_name = last_name;
     }
 
-    public String getTwitter_username() {
+    public String getTwitterUsername() {
         return twitter_username;
     }
 
-    public void setTwitter_username(String twitter_username) {
+    public void setTwitterUsername(String twitter_username) {
         this.twitter_username = twitter_username;
     }
 }

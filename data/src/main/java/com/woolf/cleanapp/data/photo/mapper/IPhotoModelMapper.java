@@ -1,6 +1,7 @@
 package com.woolf.cleanapp.data.photo.mapper;
 
 
+import com.woolf.cleanapp.data.model.cache.PhotoCacheModel;
 import com.woolf.cleanapp.data.model.service.PhotoEntity;
 import com.woolf.cleanapp.domain.model.PhotoDomainModel;
 
@@ -12,4 +13,11 @@ public interface IPhotoModelMapper {
 
     List<PhotoDomainModel> mapEntityToDomainList(List<PhotoEntity> photos);
 
+    PhotoDomainModel mapCacheToDomain(PhotoCacheModel photo);
+
+    List<PhotoDomainModel> mapCacheToDomainList(List<PhotoCacheModel> photos);
+
+    PhotoCacheModel mapEntityToCache(PhotoEntity photo);
+
+    List<PhotoCacheModel> mapEntityToCacheList(List<PhotoEntity> photo);
 }

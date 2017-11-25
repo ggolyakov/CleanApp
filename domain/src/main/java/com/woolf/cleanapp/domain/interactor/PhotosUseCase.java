@@ -14,8 +14,8 @@ public class PhotosUseCase extends BaseUseCase<List<PhotoDomainModel>, HashMap<S
 
     private IPhotoRepository photoRepository;
 
-    public PhotosUseCase(IPhotoRepository photoRepository, Scheduler thread) {
-        super(thread);
+    public PhotosUseCase(IPhotoRepository photoRepository, Scheduler mainThread, Scheduler backgroundThread) {
+        super(mainThread, backgroundThread);
         this.photoRepository = photoRepository;
     }
 

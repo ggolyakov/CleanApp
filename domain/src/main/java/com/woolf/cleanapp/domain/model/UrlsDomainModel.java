@@ -1,7 +1,9 @@
 package com.woolf.cleanapp.domain.model;
 
 
-public class UrlsDomainModel {
+import java.io.Serializable;
+
+public class UrlsDomainModel implements Serializable {
     private String raw;
     private String full;
     private String regular;

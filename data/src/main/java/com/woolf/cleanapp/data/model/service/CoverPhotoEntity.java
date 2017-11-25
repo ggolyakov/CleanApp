@@ -82,11 +82,11 @@ public class CoverPhotoEntity {
         this.likes = likes;
     }
 
-    public Boolean getLiked_by_user() {
+    public Boolean getLikedByUser() {
         return liked_by_user;
     }
 
-    public void setLiked_by_user(Boolean liked_by_user) {
+    public void setLikedByUser(Boolean liked_by_user) {
         this.liked_by_user = liked_by_user;
     }
 

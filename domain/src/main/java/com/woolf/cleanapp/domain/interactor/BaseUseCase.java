@@ -4,19 +4,20 @@ import io.reactivex.Flowable;
 import io.reactivex.Scheduler;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.schedulers.Schedulers;
 import io.reactivex.subscribers.DisposableSubscriber;
 
 
 public abstract class BaseUseCase<T, Params> {
 
     private CompositeDisposable disposables;
-    private Scheduler postExecutionThread;
+    private Scheduler mainThread;
+    private Scheduler backgroundThread;
 
     abstract Flowable<T> buildUseCaseObservable(Params params);
 
-    public BaseUseCase(Scheduler thread) {
-        this.postExecutionThread = thread;
+    public BaseUseCase(Scheduler mainThread,Scheduler backgroundThread) {
+        this.mainThread = mainThread;
+        this.backgroundThread = backgroundThread;
         disposables = new CompositeDisposable();
     }
 
@@ -44,8 +45,8 @@ public abstract class BaseUseCase<T, Params> {
     private Flowable<T> getResponseFlowable(final Params params) {
         return buildUseCaseObservable(params)
                 .onBackpressureLatest()
-                .subscribeOn(Schedulers.io())
-                .observeOn(postExecutionThread);
+                .subscribeOn(backgroundThread)
+                .observeOn(mainThread);
     }
 
 }

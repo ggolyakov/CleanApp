@@ -25,14 +25,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:pv_error_text="Error"
-        app:pv_error_text_color="@color/black"
+        app:pv_error_text_color="@color/white"
         app:pv_error_text_margin_bottom="8dp"
         app:pv_error_text_margin_end="64dp"
         app:pv_error_text_margin_start="64dp"
         app:pv_pb_color="@color/colorAccent"
         app:pv_retry_button_background="@drawable/selector_retry_button"
-        app:pv_retry_button_text="Retry"
         app:pv_retry_button_height="40dp"
+        app:pv_retry_button_text="Retry"
         app:pv_retry_button_text_color="@color/white"
         app:pv_state="complete"/>
 

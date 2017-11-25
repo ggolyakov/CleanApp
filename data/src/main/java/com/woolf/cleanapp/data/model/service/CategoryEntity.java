@@ -35,11 +35,11 @@ public class CategoryEntity {
         this.title = title;
     }
 
-    public Integer getPhoto_count() {
+    public Integer getPhotoCount() {
         return photo_count;
     }
 
-    public void setPhoto_count(Integer photo_count) {
+    public void setPhotoCount(Integer photo_count) {
         this.photo_count = photo_count;
     }
 

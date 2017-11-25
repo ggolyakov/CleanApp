@@ -3,7 +3,7 @@ package com.woolf.cleanapp.di;
 
 import com.woolf.cleanapp.CleanApplication;
 import com.woolf.cleanapp.di.app.AppComponent;
-import com.woolf.cleanapp.di.app.ContextModule;
+import com.woolf.cleanapp.di.app.module.ContextModule;
 import com.woolf.cleanapp.di.app.DaggerAppComponent;
 import com.woolf.cleanapp.di.photo.PhotoComponent;
 import com.woolf.cleanapp.di.photo.PhotoRepositoryModule;

@@ -96,6 +96,8 @@ public class ProgressView extends RelativeLayout {
         removeAllViews();
 
         TypedArray typedArray = getContext().obtainStyledAttributes(attrs, R.styleable.ProgressView);
+        int backgroundColor = typedArray.getColor(R.styleable.ProgressView_pv_background_color, Color.TRANSPARENT);
+        setBackgroundColor(backgroundColor);
         initProgressBar(typedArray, context);
         initLinearLayout(typedArray, context);
 

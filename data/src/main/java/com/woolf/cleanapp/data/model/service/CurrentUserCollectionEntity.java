@@ -47,19 +47,19 @@ public class CurrentUserCollectionEntity {
         this.title = title;
     }
 
-    public String getPublished_at() {
+    public String getPublishedAt() {
         return published_at;
     }
 
-    public void setPublished_at(String published_at) {
+    public void setPublishedAt(String published_at) {
         this.published_at = published_at;
     }
 
-    public String getUpdated_at() {
+    public String getUpdatedAt() {
         return updated_at;
     }
 
-    public void setUpdated_at(String updated_at) {
+    public void setUpdatedAt(String updated_at) {
         this.updated_at = updated_at;
     }
 
@@ -71,11 +71,11 @@ public class CurrentUserCollectionEntity {
         this.curated = curated;
     }
 
-    public CoverPhotoEntity getCover_photo() {
+    public CoverPhotoEntity getCoverPhoto() {
         return cover_photo;
     }
 
-    public void setCover_photo(CoverPhotoEntity cover_photo) {
+    public void setCoverPhoto(CoverPhotoEntity cover_photo) {
         this.cover_photo = cover_photo;
     }
 

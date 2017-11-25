@@ -14,6 +14,7 @@ import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.woolf.cleanapp.R;
 import com.woolf.cleanapp.base.BaseFragment;
 import com.woolf.cleanapp.domain.model.PhotoDomainModel;
+import com.woolf.cleanapp.util.adapter.PhotoAdapter;
 import com.woolf.cleanapp.util.view.ProgressView;
 
 import java.util.List;
@@ -49,14 +50,16 @@ public class PhotosFragment extends BaseFragment implements IPhotosView {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
         photoAdapter = new PhotoAdapter();
-        boolean isLanscape = getResources().getBoolean(R.bool.isLandscape);
-        if (isLanscape) {
+
+        boolean isLandscape = getResources().getBoolean(R.bool.isLandscape);
+        if (isLandscape) {
             rvPhotos.setLayoutManager(new GridLayoutManager(getActivity(), 2));
         } else {
             rvPhotos.setLayoutManager(new LinearLayoutManager(getActivity()));
         }
 
         rvPhotos.setAdapter(photoAdapter);
+        photoAdapter.setClickListener(photoDomainModel -> photosPresenter.openDetailScreen(photoDomainModel));
     }
 
 
@@ -75,9 +78,12 @@ public class PhotosFragment extends BaseFragment implements IPhotosView {
         pvLoad.onErrorLoading(error);
     }
 
-
     @Override
     public void showList(List<PhotoDomainModel> photos) {
         photoAdapter.swap(photos);
+//        if (photosPresenter.isInRestoreState(this)) {
+//            rvPhotos.scheduleLayoutAnimation();
+//        }
+
     }
 }

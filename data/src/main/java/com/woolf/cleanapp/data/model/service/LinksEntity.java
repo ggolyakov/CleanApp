@@ -76,11 +76,11 @@ public class LinksEntity {
         this.download = download;
     }
 
-    public String getDownload_location() {
+    public String getDownloadLocation() {
         return download_location;
     }
 
-    public void setDownload_location(String download_location) {
+    public void setDownloadLocation(String download_location) {
         this.download_location = download_location;
     }
 

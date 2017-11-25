@@ -1,0 +1,431 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/iv_detail_back"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="8dp"
+        android:background="?android:attr/selectableItemBackground"
+        android:padding="8dp"
+        android:src="@drawable/ic_left_arrow"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <ImageView
+        android:id="@+id/iv_detail_favorites"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="16dp"
+        android:src="@drawable/ic_favorite"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/sdv_detail_avatar"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="16dp"
+        app:fadeDuration="300"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_detail_back"
+        app:layout_constraintStart_toEndOf="@+id/iv_detail_back"
+        app:layout_constraintTop_toTopOf="@+id/iv_detail_back"
+        app:placeholderImage="@drawable/ic_user_placeholder"
+        app:placeholderImageScaleType="centerInside"
+        app:roundAsCircle="true"
+        app:roundingBorderColor="@color/colorPrimary"
+        app:roundingBorderWidth="2dp"/>
+
+    <TextView
+        android:id="@+id/tv_detail_username"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:fontFamily="@font/roboto_bold"
+        android:shadowColor="@color/black"
+        android:shadowDy="1"
+        android:shadowRadius="1"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/sdv_detail_avatar"
+        app:layout_constraintEnd_toStartOf="@+id/iv_detail_favorites"
+        app:layout_constraintStart_toEndOf="@+id/sdv_detail_avatar"
+        app:layout_constraintTop_toTopOf="@+id/sdv_detail_avatar"/>
+
+
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sdv_detail_avatar"
+        app:layout_constraintVertical_bias="0.0">
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/cl_detail_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <android.support.constraint.Guideline
+                android:id="@+id/gl"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.5"/>
+
+
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/sdv_detail_photo"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                android:scaleType="centerInside"
+                app:actualImageScaleType="centerCrop"
+                app:fadeDuration="300"
+                app:layout_constraintDimensionRatio="w,1:1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/gl"
+                app:layout_constraintTop_toTopOf="parent"
+                app:placeholderImage="@drawable/ic_photo_placeholder"
+                app:placeholderImageScaleType="centerInside"
+                app:roundedCornerRadius="8dp"/>
+
+
+            <ImageView
+                android:id="@+id/iv_detail_image_info"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:src="@drawable/ic_photo"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+
+            <TextView
+                android:id="@+id/tv_detail_info"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:fontFamily="@font/roboto_bold"
+                android:shadowColor="@color/black"
+                android:shadowDy="1"
+                android:shadowRadius="1"
+                android:text="@string/label_image_info"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="@+id/iv_detail_image_info"
+                app:layout_constraintStart_toEndOf="@+id/iv_detail_image_info"
+                app:layout_constraintTop_toTopOf="@+id/iv_detail_image_info"/>
+
+
+            <TextView
+                android:id="@+id/tv_detail_size_key"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/roboto_bold"
+                android:text="@string/label_dimensions"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/iv_detail_image_info"/>
+
+            <TextView
+                android:id="@+id/tv_detail_size_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:fontFamily="@font/roboto_bold"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                app:layout_constraintBaseline_toBaselineOf="@+id/tv_detail_size_key"
+                app:layout_constraintEnd_toEndOf="@+id/gl"/>
+
+
+            <TextView
+                android:id="@+id/tv_detail_camera_make_key"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/roboto_bold"
+                android:text="@string/label_camera_make"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_detail_size_key"/>
+
+            <TextView
+                android:id="@+id/tv_detail_camera_make_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:fontFamily="@font/roboto_bold"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                app:layout_constraintBaseline_toBaselineOf="@+id/tv_detail_camera_make_key"
+                app:layout_constraintEnd_toEndOf="@+id/gl"/>
+
+            <TextView
+                android:id="@+id/tv_detail_camera_model_key"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/roboto_bold"
+                android:text="@string/label_camera_model"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_detail_camera_make_key"/>
+
+            <TextView
+                android:id="@+id/tv_detail_camera_model_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:fontFamily="@font/roboto_bold"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                app:layout_constraintBaseline_toBaselineOf="@+id/tv_detail_camera_model_key"
+                app:layout_constraintEnd_toEndOf="@+id/gl"/>
+
+
+            <TextView
+                android:id="@+id/tv_detail_camera_focal_length_key"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/roboto_bold"
+                android:text="@string/label_focal_length"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_detail_camera_model_key"/>
+
+            <TextView
+                android:id="@+id/tv_detail_camera_focal_length_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:fontFamily="@font/roboto_bold"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                app:layout_constraintBaseline_toBaselineOf="@+id/tv_detail_camera_focal_length_key"
+                app:layout_constraintEnd_toEndOf="@+id/gl"/>
+
+
+            <TextView
+                android:id="@+id/tv_detail_camera_aperture_key"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/roboto_bold"
+                android:text="@string/label_aperture"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_detail_camera_focal_length_key"/>
+
+            <TextView
+                android:id="@+id/tv_detail_camera_aperture_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:fontFamily="@font/roboto_bold"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                app:layout_constraintBaseline_toBaselineOf="@+id/tv_detail_camera_aperture_key"
+                app:layout_constraintEnd_toEndOf="@+id/gl"/>
+
+
+            <TextView
+                android:id="@+id/tv_detail_camera_shutter_speed_key"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/roboto_bold"
+                android:text="@string/label_shutter_speed"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_detail_camera_aperture_key"/>
+
+            <TextView
+                android:id="@+id/tv_detail_camera_shutter_speed_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:fontFamily="@font/roboto_bold"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                app:layout_constraintBaseline_toBaselineOf="@+id/tv_detail_camera_shutter_speed_key"
+                app:layout_constraintEnd_toEndOf="@+id/gl"/>
+
+
+            <TextView
+                android:id="@+id/tv_detail_camera_iso_key"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/roboto_bold"
+                android:text="@string/label_iso"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_detail_camera_shutter_speed_key"/>
+
+            <TextView
+                android:id="@+id/tv_detail_camera_iso_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:fontFamily="@font/roboto_bold"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                app:layout_constraintBaseline_toBaselineOf="@+id/tv_detail_camera_iso_key"
+                app:layout_constraintEnd_toEndOf="@+id/gl"/>
+
+
+            <ImageView
+                android:id="@+id/iv_detail_location"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:src="@drawable/ic_location"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_detail_camera_iso_key"/>
+
+            <TextView
+                android:id="@+id/tv_detail_location"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:fontFamily="@font/roboto_bold"
+                android:shadowColor="@color/black"
+                android:shadowDy="1"
+                android:shadowRadius="1"
+                android:text="@string/label_location"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="@+id/iv_detail_location"
+                app:layout_constraintStart_toEndOf="@+id/iv_detail_location"
+                app:layout_constraintTop_toTopOf="@+id/iv_detail_location"/>
+
+
+            <TextView
+                android:id="@+id/tv_detail_location_country_key"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/roboto_bold"
+                android:text="@string/label_country"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/iv_detail_location"/>
+
+            <TextView
+                android:id="@+id/tv_detail_location_country_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:fontFamily="@font/roboto_bold"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                app:layout_constraintBaseline_toBaselineOf="@+id/tv_detail_location_country_key"
+                app:layout_constraintEnd_toEndOf="@+id/gl"/>
+
+
+            <TextView
+                android:id="@+id/tv_detail_location_city_key"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/roboto_bold"
+                android:text="@string/label_city"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_detail_location_country_key"/>
+
+            <TextView
+                android:id="@+id/tv_detail_location_city_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:fontFamily="@font/roboto_bold"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                app:layout_constraintBaseline_toBaselineOf="@+id/tv_detail_location_city_key"
+                app:layout_constraintEnd_toEndOf="@+id/gl"/>
+
+
+
+        </android.support.constraint.ConstraintLayout>
+    </ScrollView>
+
+    <com.woolf.cleanapp.util.view.ProgressView
+        android:id="@+id/pv_detail_photo"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:pv_background_color="@color/default_background"
+        app:pv_error_text="Error"
+        app:pv_error_text_color="@color/white"
+        app:pv_error_text_margin_bottom="8dp"
+        app:pv_error_text_margin_end="64dp"
+        app:pv_error_text_margin_start="64dp"
+        app:pv_pb_color="@color/colorAccent"
+        app:pv_retry_button_background="@drawable/selector_retry_button"
+        app:pv_retry_button_height="40dp"
+        app:pv_retry_button_text="Retry"
+        app:pv_retry_button_text_color="@color/white"
+        app:pv_state="complete"/>
+
+
+</android.support.constraint.ConstraintLayout>
+
