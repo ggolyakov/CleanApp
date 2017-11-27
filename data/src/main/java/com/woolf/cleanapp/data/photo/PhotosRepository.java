@@ -5,37 +5,35 @@ import com.woolf.cleanapp.data.IApiService;
 import com.woolf.cleanapp.data.cache.ICache;
 import com.woolf.cleanapp.data.photo.mapper.IPhotoModelMapper;
 import com.woolf.cleanapp.domain.model.PhotoDomainModel;
-import com.woolf.cleanapp.domain.repository.IPhotoRepository;
+import com.woolf.cleanapp.domain.repository.IPhotosRepository;
 
+import java.util.List;
 import java.util.Map;
 
 import io.reactivex.Single;
 
-public class PhotoRepository implements IPhotoRepository {
+public class PhotosRepository implements IPhotosRepository {
+
 
     private IApiService apiService;
     private ICache cache;
     private IPhotoModelMapper mapper;
 
-    public PhotoRepository(IApiService apiService, ICache cache, IPhotoModelMapper mapper) {
+
+    public PhotosRepository(IApiService apiService, ICache cache, IPhotoModelMapper mapper) {
         this.apiService = apiService;
         this.cache = cache;
         this.mapper = mapper;
     }
 
     @Override
-    public Single<Boolean> isFavorite(String id) {
-        return cache.isCached(id);
+    public Single<List<PhotoDomainModel>> getPhotos(Map<String, String> params) {
+        return apiService.getPhotos(params).map(photoEntities -> mapper.mapEntityToDomainList(photoEntities));
     }
 
     @Override
-    public Single<Boolean> addToFavorite(PhotoDomainModel photo) {
-        return Single.fromCallable(() -> mapper.mapDomainToCache(photo)).flatMap(model -> cache.addToFavorites(model));
-    }
-
-    @Override
-    public Single<Boolean> removeFromFavorite(String id) {
-        return cache.removeFromFavorites(id);
+    public Single<List<PhotoDomainModel>> getFavorites() {
+        return cache.getFavorites().map(photoCacheModels -> mapper.mapCacheToDomainList(photoCacheModels));
     }
 
     @Override
@@ -48,4 +46,5 @@ public class PhotoRepository implements IPhotoRepository {
             }
         });
     }
+
 }

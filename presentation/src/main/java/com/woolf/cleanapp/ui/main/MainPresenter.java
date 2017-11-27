@@ -37,4 +37,9 @@ public class MainPresenter extends BasePresenter<IMainView> {
     public void openInfoScreen() {
 
     }
+
+    @Override
+    public void onBackPressed() {
+
+    }
 }

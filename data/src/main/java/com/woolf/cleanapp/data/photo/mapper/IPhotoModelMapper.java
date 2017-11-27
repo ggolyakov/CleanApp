@@ -17,7 +17,7 @@ public interface IPhotoModelMapper {
 
     List<PhotoDomainModel> mapCacheToDomainList(List<PhotoCacheModel> photos);
 
-    PhotoCacheModel mapEntityToCache(PhotoEntity photo);
+    PhotoCacheModel mapDomainToCache(PhotoDomainModel photo);
 
-    List<PhotoCacheModel> mapEntityToCacheList(List<PhotoEntity> photo);
+    List<PhotoCacheModel> mapDomainToCacheList(List<PhotoDomainModel> photos);
 }

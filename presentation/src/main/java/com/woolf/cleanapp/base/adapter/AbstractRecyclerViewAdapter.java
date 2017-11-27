@@ -75,7 +75,7 @@ public abstract class AbstractRecyclerViewAdapter<DATA, HOLDER extends AbstractH
     }
 
     /**
-     * Method Replaces data in adapter. Old data will remove
+     * Method Replaces data in adapter. Old data will removeFromFavorites
      *
      * @param data @see {@link List}
      */
@@ -90,7 +90,7 @@ public abstract class AbstractRecyclerViewAdapter<DATA, HOLDER extends AbstractH
     }
 
     /**
-     * Method remove unit by data on adapter @see {@link AbstractRecyclerViewAdapter}
+     * Method removeFromFavorites unit by data on adapter @see {@link AbstractRecyclerViewAdapter}
      *
      * @param item DATA
      */

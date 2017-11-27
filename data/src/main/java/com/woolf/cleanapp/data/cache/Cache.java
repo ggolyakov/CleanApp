@@ -5,37 +5,35 @@ import com.woolf.cleanapp.data.model.cache.PhotoCacheModel;
 
 import java.util.List;
 
-import io.reactivex.Completable;
-import io.reactivex.Flowable;
+import io.reactivex.Single;
 import io.realm.Realm;
 import io.realm.RealmResults;
 
 public class Cache implements ICache {
 
     @Override
-    public Flowable<List<PhotoCacheModel>> getFavorites() {
-        return Flowable.fromCallable(this::getFavoritesSync);
+    public Single<List<PhotoCacheModel>> getFavorites() {
+        return Single.fromCallable(this::getFavoritesSync);
     }
 
     @Override
-    public Flowable<PhotoCacheModel> getPhotoById(String id) {
-        return Flowable.fromCallable(() -> getPhotoByIdSync(id));
+    public Single<PhotoCacheModel> getPhotoById(String id) {
+        return Single.fromCallable(() -> getPhotoByIdSync(id));
     }
 
     @Override
-    public Flowable<Boolean> isCached(String id) {
-        return Flowable.fromCallable(() -> isCachedSync(id));
+    public Single<Boolean> isCached(String id) {
+        return Single.fromCallable(() -> isCachedSync(id));
     }
 
     @Override
-    public Completable put(PhotoCacheModel model) {
-        return Completable.fromCallable(() -> putSync(model));
+    public Single<Boolean> addToFavorites(PhotoCacheModel model) {
+        return Single.fromCallable(() -> putSync(model));
     }
 
     @Override
-    public Flowable<PhotoCacheModel> remove(String id) {
-        Flowable.fromCallable(() -> removeSync(id));
-        return null;
+    public Single<Boolean> removeFromFavorites(String id) {
+        return Single.fromCallable(() -> removeSync(id));
     }
 
 
@@ -62,7 +60,7 @@ public class Cache implements ICache {
         return getPhotoByIdSync(id) != null;
     }
 
-    private Void putSync(PhotoCacheModel model) {
+    private Boolean putSync(PhotoCacheModel model) {
         Realm realm = Realm.getDefaultInstance();
         realm.beginTransaction();
         try {
@@ -76,10 +74,10 @@ public class Cache implements ICache {
         } finally {
             realm.close();
         }
-        return null;
+        return true;
     }
 
-    private Void removeSync(String id) {
+    private Boolean removeSync(String id) {
         Realm realm = Realm.getDefaultInstance();
         PhotoCacheModel result = realm.where(PhotoCacheModel.class).equalTo("id", id).findFirst();
         if (result != null) {
@@ -96,8 +94,6 @@ public class Cache implements ICache {
                 realm.close();
             }
         }
-
-        realm.close();
-        return null;
+        return true;
     }
 }

@@ -15,7 +15,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import io.reactivex.subscribers.DisposableSubscriber;
+import io.reactivex.observers.DisposableSingleObserver;
 import ru.terrakok.cicerone.Router;
 
 @InjectViewState
@@ -29,9 +29,8 @@ public class PhotosPresenter extends BasePresenter<IPhotosView> {
 
     private HashMap<String, String> params;
 
-
     public PhotosPresenter() {
-        ComponentManager.getInstance().getPhotoComponent().inject(this);
+        ComponentManager.getInstance().getPhotosComponent().inject(this);
         params = RequestParams.newBuilder()
                 .append("client_id", BuildConfig.UnsplashApiId)
                 .append("per_page", "30")
@@ -46,21 +45,21 @@ public class PhotosPresenter extends BasePresenter<IPhotosView> {
     @Override
     protected void onFirstViewAttach() {
         super.onFirstViewAttach();
+        loadPhotos();
+    }
+
+    private void loadPhotos() {
         getViewState().showProgress();
-        photosUseCase.execute(new DisposableSubscriber<List<PhotoDomainModel>>() {
+        photosUseCase.execute(new DisposableSingleObserver<List<PhotoDomainModel>>() {
             @Override
-            public void onNext(List<PhotoDomainModel> photoDomainModels) {
+            public void onSuccess(List<PhotoDomainModel> photoDomainModels) {
                 getViewState().showList(photoDomainModels);
-            }
-
-            @Override
-            public void onError(Throwable t) {
-                getViewState().showError(t.getMessage());
-            }
-
-            @Override
-            public void onComplete() {
                 getViewState().hideProgress();
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                getViewState().showError(e.getMessage());
             }
         }, params);
     }
@@ -68,6 +67,15 @@ public class PhotosPresenter extends BasePresenter<IPhotosView> {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        ComponentManager.getInstance().destroyPhotoComponent();
+        ComponentManager.getInstance().destroyPhotosComponent();
+    }
+
+    @Override
+    public void onBackPressed() {
+        router.exit();
+    }
+
+    public void reload() {
+        loadPhotos();
     }
 }

@@ -4,19 +4,17 @@ package com.woolf.cleanapp.data.util;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import io.reactivex.Scheduler;
+import com.woolf.cleanapp.domain.executor.IThreadExecutor;
 
-public class PrefenceUtils implements IPreferenceUtils{
+public class PreferenceUtils implements IPreferenceUtils{
 
     private Context context;
     private SharedPreferences preferences;
-    private Scheduler mainScheduler;
-    private Scheduler backgroundScheduler;
+    private IThreadExecutor threadExecutor;
 
-    public PrefenceUtils(Context context, Scheduler mainScheduler, Scheduler backgroundScheduler) {
+    public PreferenceUtils(Context context, IThreadExecutor threadExecutor) {
         this.context = context;
-        this.mainScheduler = mainScheduler;
-        this.backgroundScheduler = backgroundScheduler;
+        this.threadExecutor = threadExecutor;
     }
 
     @Override

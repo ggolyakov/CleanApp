@@ -6,13 +6,14 @@ import com.woolf.cleanapp.base.BasePresenter;
 import com.woolf.cleanapp.di.ComponentManager;
 import com.woolf.cleanapp.domain.interactor.FavoritesUseCase;
 import com.woolf.cleanapp.domain.model.PhotoDomainModel;
+import com.woolf.cleanapp.util.Screens;
 
-import java.util.HashMap;
 import java.util.List;
 
 import javax.inject.Inject;
 
-import io.reactivex.subscribers.DisposableSubscriber;
+import io.reactivex.observers.DisposableSingleObserver;
+import ru.terrakok.cicerone.Router;
 
 @InjectViewState
 public class FavoritesPresenter extends BasePresenter<IFavoritesView> {
@@ -20,8 +21,13 @@ public class FavoritesPresenter extends BasePresenter<IFavoritesView> {
     @Inject
     FavoritesUseCase favoritesUseCase;
 
+    @Inject
+    Router router;
+
+
     public FavoritesPresenter() {
-        ComponentManager.getInstance().getPhotoComponent().inject(this);
+        ComponentManager.getInstance().getPhotosComponent().inject(this);
+        setResultListener();
     }
 
     @Override
@@ -30,34 +36,60 @@ public class FavoritesPresenter extends BasePresenter<IFavoritesView> {
         loadFavorites();
     }
 
+    public void openDetailScreen(PhotoDomainModel model) {
+        router.navigateTo(Screens.DETAIL, model);
+    }
+
     private void loadFavorites() {
         getViewState().hideEmptyListView();
         getViewState().showProgress();
-        favoritesUseCase.execute(new DisposableSubscriber<List<PhotoDomainModel>>() {
+
+        favoritesUseCase.execute(new DisposableSingleObserver<List<PhotoDomainModel>>() {
             @Override
-            public void onNext(List<PhotoDomainModel> photoDomainModels) {
+            public void onSuccess(List<PhotoDomainModel> photoDomainModels) {
                 if (photoDomainModels == null || photoDomainModels.isEmpty()) {
                     getViewState().showEmptyListView();
-                } else {
-                    getViewState().showList(photoDomainModels);
                 }
-            }
-
-            @Override
-            public void onError(Throwable t) {
-                getViewState().showError(t.getMessage());
-            }
-
-            @Override
-            public void onComplete() {
+                getViewState().showList(photoDomainModels);
                 getViewState().hideProgress();
             }
-        }, new HashMap<>());
+
+            @Override
+            public void onError(Throwable e) {
+                getViewState().showError(e.getMessage());
+            }
+        },null);
+
     }
 
     @Override
     public void onDestroy() {
+        removeResultListener();
+        ComponentManager.getInstance().destroyPhotosComponent();
         super.onDestroy();
-        ComponentManager.getInstance().destroyPhotoComponent();
+    }
+
+    public void reload() {
+        getViewState().hideEmptyListView();
+        getViewState().showProgress();
+        loadFavorites();
+    }
+
+    @Override
+    public void onBackPressed() {
+        router.exit();
+    }
+
+    private void setResultListener() {
+        router.setResultListener(Screens.FAVORITES_RESULT, resultData -> {
+            boolean isStatusChange = (boolean) resultData;
+            if (isStatusChange) {
+                loadFavorites();
+            }
+        });
+    }
+
+    private void removeResultListener() {
+        router.removeResultListener(Screens.FAVORITES_RESULT);
     }
 }

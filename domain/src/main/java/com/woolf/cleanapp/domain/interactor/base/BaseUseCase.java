@@ -1,10 +1,10 @@
-package com.woolf.cleanapp.domain.interactor;
+package com.woolf.cleanapp.domain.interactor.base;
 
-import io.reactivex.Flowable;
 import io.reactivex.Scheduler;
+import io.reactivex.Single;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.subscribers.DisposableSubscriber;
+import io.reactivex.observers.DisposableSingleObserver;
 
 
 public abstract class BaseUseCase<T, Params> {
@@ -13,9 +13,9 @@ public abstract class BaseUseCase<T, Params> {
     private Scheduler mainThread;
     private Scheduler backgroundThread;
 
-    abstract Flowable<T> buildUseCaseObservable(Params params);
+    abstract Single<T> buildUseCaseObservable(Params params);
 
-    public BaseUseCase(Scheduler mainThread,Scheduler backgroundThread) {
+    public BaseUseCase(Scheduler mainThread, Scheduler backgroundThread) {
         this.mainThread = mainThread;
         this.backgroundThread = backgroundThread;
         disposables = new CompositeDisposable();
@@ -24,8 +24,8 @@ public abstract class BaseUseCase<T, Params> {
     /**
      * Need call
      */
-    public void execute(final DisposableSubscriber<T> disposableSubscriber, final Params params) {
-        final Flowable<T> responseFlowable = getResponseFlowable(params);
+    public void execute(final DisposableSingleObserver<T> disposableSubscriber, final Params params) {
+        final Single<T> responseFlowable = getResponseSingle(params);
         addDisposable(
                 responseFlowable.subscribeWith(disposableSubscriber)
         );
@@ -42,9 +42,8 @@ public abstract class BaseUseCase<T, Params> {
         disposables.add(localDisposable);
     }
 
-    private Flowable<T> getResponseFlowable(final Params params) {
+    private Single<T> getResponseSingle(final Params params) {
         return buildUseCaseObservable(params)
-                .onBackpressureLatest()
                 .subscribeOn(backgroundThread)
                 .observeOn(mainThread);
     }

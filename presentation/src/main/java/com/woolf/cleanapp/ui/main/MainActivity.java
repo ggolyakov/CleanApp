@@ -11,6 +11,7 @@ import com.woolf.cleanapp.R;
 import com.woolf.cleanapp.base.BaseActivity;
 import com.woolf.cleanapp.di.ComponentManager;
 import com.woolf.cleanapp.util.FragmentFactory;
+import com.woolf.cleanapp.util.IBackButtonListener;
 
 import javax.inject.Inject;
 
@@ -57,7 +58,7 @@ public class MainActivity extends BaseActivity implements IMainView, BottomNavig
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         if (bnvMenu.getSelectedItemId() == item.getItemId()) return false;
         switch (item.getItemId()) {
-            case R.id.menu_action_list:
+            case R.id.menu_action_home:
                 mainPresenter.openMainScreen();
                 return true;
 
@@ -71,6 +72,18 @@ public class MainActivity extends BaseActivity implements IMainView, BottomNavig
 
             default:
                 return false;
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fl_container);
+        if (fragment != null
+                && fragment instanceof IBackButtonListener
+                && ((IBackButtonListener) fragment).onBackPressed()) {
+            return;
+        } else {
+            super.onBackPressed();
         }
     }
 

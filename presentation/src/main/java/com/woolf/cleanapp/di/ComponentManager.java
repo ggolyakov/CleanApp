@@ -3,15 +3,16 @@ package com.woolf.cleanapp.di;
 
 import com.woolf.cleanapp.CleanApplication;
 import com.woolf.cleanapp.di.app.AppComponent;
-import com.woolf.cleanapp.di.app.module.ContextModule;
 import com.woolf.cleanapp.di.app.DaggerAppComponent;
+import com.woolf.cleanapp.di.app.module.ContextModule;
 import com.woolf.cleanapp.di.photo.PhotoComponent;
-import com.woolf.cleanapp.di.photo.PhotoRepositoryModule;
+import com.woolf.cleanapp.di.photos.PhotosComponent;
 
 public class ComponentManager {
     private static ComponentManager componentManager;
 
     private AppComponent appComponent;
+    private PhotosComponent photosComponent;
     private PhotoComponent photoComponent;
 
     public static ComponentManager getInstance() {
@@ -29,11 +30,22 @@ public class ComponentManager {
         return appComponent;
     }
 
+    public PhotosComponent getPhotosComponent() {
+        if (photosComponent == null) {
+            photosComponent = getAppComponent().photosComponentBuilder().build();
+        }
+        return photosComponent;
+    }
+
     public PhotoComponent getPhotoComponent() {
         if (photoComponent == null) {
-            photoComponent = getAppComponent().photoComponentBuilder().scModule(new PhotoRepositoryModule()).build();
+            photoComponent = getPhotosComponent().photoComponentBuilder().build();
         }
         return photoComponent;
+    }
+
+    public void destroyPhotosComponent() {
+        photosComponent = null;
     }
 
     public void destroyPhotoComponent() {

@@ -13,17 +13,23 @@ import android.view.ViewGroup;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.woolf.cleanapp.R;
 import com.woolf.cleanapp.base.BaseFragment;
+import com.woolf.cleanapp.di.ComponentManager;
 import com.woolf.cleanapp.domain.model.PhotoDomainModel;
+import com.woolf.cleanapp.util.IBackButtonListener;
+import com.woolf.cleanapp.util.ResUtils;
 import com.woolf.cleanapp.util.adapter.PhotoAdapter;
 import com.woolf.cleanapp.util.view.EmptyView;
 import com.woolf.cleanapp.util.view.ProgressView;
 
 import java.util.List;
 
+import javax.inject.Inject;
+import javax.inject.Provider;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class FavoritesFragment extends BaseFragment implements IFavoritesView {
+public class FavoritesFragment extends BaseFragment implements IFavoritesView, IBackButtonListener, ProgressView.RetryClickListener {
 
     @InjectPresenter
     FavoritesPresenter presenter;
@@ -31,11 +37,27 @@ public class FavoritesFragment extends BaseFragment implements IFavoritesView {
     @BindView(R.id.pv_load_favorites)
     ProgressView pvLoad;
     @BindView(R.id.ev_favorites)
-    EmptyView evEmpltyList;
+    EmptyView evEmptyList;
     @BindView(R.id.rv_favorites)
     RecyclerView rvFavorites;
 
-    private PhotoAdapter photoAdapter;
+    @Inject
+    PhotoAdapter photoAdapter;
+    @Inject
+    Provider<LinearLayoutManager> linearLayoutManager;
+    @Inject
+    Provider<GridLayoutManager> gridLayoutManager;
+    @Inject
+    ResUtils resUtils;
+
+    private boolean isLandscape;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        ComponentManager.getInstance().getPhotosComponent().inject(this);
+        isLandscape = resUtils.getBoolean(R.bool.isLandscape);
+    }
 
     @Nullable
     @Override
@@ -47,16 +69,10 @@ public class FavoritesFragment extends BaseFragment implements IFavoritesView {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
-        photoAdapter = new PhotoAdapter();
-
-        boolean isLandscape = getResources().getBoolean(R.bool.isLandscape);
-        if (isLandscape) {
-            rvFavorites.setLayoutManager(new GridLayoutManager(getActivity(), 2));
-        } else {
-            rvFavorites.setLayoutManager(new LinearLayoutManager(getActivity()));
-        }
-
+        pvLoad.setRetryClickListener(this);
+        rvFavorites.setLayoutManager(isLandscape ? gridLayoutManager.get() : linearLayoutManager.get());
         rvFavorites.setAdapter(photoAdapter);
+        photoAdapter.setClickListener(photoDomainModel -> presenter.openDetailScreen(photoDomainModel));
     }
 
     @Override
@@ -81,11 +97,22 @@ public class FavoritesFragment extends BaseFragment implements IFavoritesView {
 
     @Override
     public void showEmptyListView() {
-        evEmpltyList.show();
+        evEmptyList.show();
     }
 
     @Override
     public void hideEmptyListView() {
-        evEmpltyList.hide();
+        evEmptyList.hide();
+    }
+
+    @Override
+    public boolean onBackPressed() {
+        presenter.onBackPressed();
+        return true;
+    }
+
+    @Override
+    public void onReload() {
+        presenter.reload();
     }
 }

@@ -4,18 +4,17 @@ import com.woolf.cleanapp.data.model.cache.PhotoCacheModel;
 
 import java.util.List;
 
-import io.reactivex.Completable;
-import io.reactivex.Flowable;
+import io.reactivex.Single;
 
 public interface ICache {
 
-    Flowable<List<PhotoCacheModel>> getFavorites();
+    Single<List<PhotoCacheModel>> getFavorites();
 
-    Flowable<PhotoCacheModel> getPhotoById(String id);
+    Single<PhotoCacheModel> getPhotoById(String id);
 
-    Flowable<Boolean> isCached(String id);
+    Single<Boolean> isCached(String id);
 
-    Completable put(PhotoCacheModel model);
+    Single<Boolean> addToFavorites(PhotoCacheModel model);
 
-    Flowable<PhotoCacheModel> remove(String id);
+    Single<Boolean> removeFromFavorites(String id);
 }

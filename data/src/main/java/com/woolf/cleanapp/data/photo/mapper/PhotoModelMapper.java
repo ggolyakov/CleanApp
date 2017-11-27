@@ -43,6 +43,7 @@ public class PhotoModelMapper implements IPhotoModelMapper {
         model.setUrls(urls);
         model.setExif(exif);
         model.setLocation(location);
+        model.setFavorite(false);
         //User
         if (photo.getUser() != null) {
             UserEntity userEntity = photo.getUser();
@@ -119,6 +120,7 @@ public class PhotoModelMapper implements IPhotoModelMapper {
         model.setUrls(urls);
         model.setExif(exif);
         model.setLocation(location);
+        model.setFavorite(true);
         //User
         if (photo.getUser() != null) {
             UserCacheModel userEntity = photo.getUser();
@@ -176,12 +178,77 @@ public class PhotoModelMapper implements IPhotoModelMapper {
     }
 
     @Override
-    public PhotoCacheModel mapEntityToCache(PhotoEntity photo) {
-        return null;
+    public PhotoCacheModel mapDomainToCache(PhotoDomainModel photo) {
+        PhotoCacheModel model = new PhotoCacheModel();
+        UserCacheModel user = new UserCacheModel();
+        UrlsCacheModel urls = new UrlsCacheModel();
+        ExifCacheModel exif = new ExifCacheModel();
+        LocationCacheModel location = new LocationCacheModel();
+        ProfileImageCacheModel profile = new ProfileImageCacheModel();
+
+        model.setId(photo.getId());
+        model.setWidth(photo.getWidth());
+        model.setHeight(photo.getHeight());
+        model.setLikes(photo.getLikes());
+        model.setDescription(photo.getDescription());
+        model.setUser(user);
+        model.setUrls(urls);
+        model.setExif(exif);
+        model.setLocation(location);
+        //User
+        if (photo.getUser() != null) {
+            UserDomainModel userEntity = photo.getUser();
+            user.setId(userEntity.getId());
+            user.setFirstName(userEntity.getFirstName());
+            user.setLastName(userEntity.getLastName());
+            user.setProfileImage(profile);
+            user.setUsername(userEntity.getUsername());
+            //Profile
+            if (userEntity.getProfileImage() != null) {
+                ProfileImageDomainModel profileImageEntity = userEntity.getProfileImage();
+                profile.setLarge(profileImageEntity.getLarge());
+                profile.setMedium(profileImageEntity.getMedium());
+                profile.setSmall(profileImageEntity.getSmall());
+            }
+        }
+        //Urls
+        if (photo.getUrls() != null) {
+            UrlsDomainModel urlsEntity = photo.getUrls();
+            urls.setFull(urlsEntity.getFull());
+            urls.setRaw(urlsEntity.getRaw());
+            urls.setRegular(urlsEntity.getRegular());
+            urls.setSmall(urlsEntity.getSmall());
+            urls.setThumb(urlsEntity.getThumb());
+        }
+        if (photo.getExif() != null) {
+            ExifDomainModel exifEntity = photo.getExif();
+            exif.setAperture(exifEntity.getAperture());
+            exif.setExposureTime(exifEntity.getExposureTime());
+            exif.setFocalLength(exifEntity.getFocalLength());
+            exif.setIso(exifEntity.getIso());
+            exif.setMake(exifEntity.getMake());
+            exif.setModel(exifEntity.getModel());
+        }
+        //Location
+        if (photo.getLocation() != null) {
+            LocationDomainModel locationEntity = photo.getLocation();
+            location.setCity(locationEntity.getCity());
+            location.setCountry(locationEntity.getCountry());
+            location.setLatitude(locationEntity.getLatitude());
+            location.setLongitude(locationEntity.getLongitude());
+        }
+        return model;
     }
 
     @Override
-    public List<PhotoCacheModel> mapEntityToCacheList(List<PhotoEntity> photo) {
-        return null;
+    public List<PhotoCacheModel> mapDomainToCacheList(List<PhotoDomainModel> photos) {
+        List<PhotoCacheModel> list = new ArrayList<>();
+        if (photos != null && !photos.isEmpty()) {
+            for (PhotoDomainModel photo : photos) {
+                list.add(mapDomainToCache(photo));
+            }
+        }
+        return list;
     }
+
 }

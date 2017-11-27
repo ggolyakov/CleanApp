@@ -13,16 +13,22 @@ import android.view.ViewGroup;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.woolf.cleanapp.R;
 import com.woolf.cleanapp.base.BaseFragment;
+import com.woolf.cleanapp.di.ComponentManager;
 import com.woolf.cleanapp.domain.model.PhotoDomainModel;
+import com.woolf.cleanapp.util.IBackButtonListener;
+import com.woolf.cleanapp.util.ResUtils;
 import com.woolf.cleanapp.util.adapter.PhotoAdapter;
 import com.woolf.cleanapp.util.view.ProgressView;
 
 import java.util.List;
 
+import javax.inject.Inject;
+import javax.inject.Provider;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class PhotosFragment extends BaseFragment implements IPhotosView {
+public class PhotosFragment extends BaseFragment implements IPhotosView, IBackButtonListener, ProgressView.RetryClickListener {
 
     @InjectPresenter
     PhotosPresenter photosPresenter;
@@ -32,11 +38,23 @@ public class PhotosFragment extends BaseFragment implements IPhotosView {
     @BindView(R.id.pv_load_photos)
     ProgressView pvLoad;
 
-    private PhotoAdapter photoAdapter;
+    @Inject
+    PhotoAdapter photoAdapter;
+    @Inject
+    Provider<LinearLayoutManager> linearLayoutManager;
+    @Inject
+    Provider<GridLayoutManager> gridLayoutManager;
+    @Inject
+    ResUtils resUtils;
+
+    private boolean isLandscape;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ComponentManager.getInstance().getPhotosComponent().inject(this);
+        isLandscape = resUtils.getBoolean(R.bool.isLandscape);
     }
 
     @Nullable
@@ -49,18 +67,12 @@ public class PhotosFragment extends BaseFragment implements IPhotosView {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
-        photoAdapter = new PhotoAdapter();
-
-        boolean isLandscape = getResources().getBoolean(R.bool.isLandscape);
-        if (isLandscape) {
-            rvPhotos.setLayoutManager(new GridLayoutManager(getActivity(), 2));
-        } else {
-            rvPhotos.setLayoutManager(new LinearLayoutManager(getActivity()));
-        }
-
+        pvLoad.setRetryClickListener(this);
+        rvPhotos.setLayoutManager(isLandscape ? gridLayoutManager.get() : linearLayoutManager.get());
         rvPhotos.setAdapter(photoAdapter);
         photoAdapter.setClickListener(photoDomainModel -> photosPresenter.openDetailScreen(photoDomainModel));
     }
+
 
 
     @Override
@@ -81,9 +93,17 @@ public class PhotosFragment extends BaseFragment implements IPhotosView {
     @Override
     public void showList(List<PhotoDomainModel> photos) {
         photoAdapter.swap(photos);
-//        if (photosPresenter.isInRestoreState(this)) {
-//            rvPhotos.scheduleLayoutAnimation();
-//        }
 
+    }
+
+    @Override
+    public boolean onBackPressed() {
+        photosPresenter.onBackPressed();
+        return true;
+    }
+
+    @Override
+    public void onReload() {
+        photosPresenter.reload();
     }
 }

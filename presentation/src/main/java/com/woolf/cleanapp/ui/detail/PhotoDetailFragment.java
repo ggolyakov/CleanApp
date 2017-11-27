@@ -8,6 +8,7 @@ import android.support.constraint.ConstraintLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.arellomobile.mvp.presenter.InjectPresenter;
@@ -21,13 +22,14 @@ import com.woolf.cleanapp.base.BaseFragment;
 import com.woolf.cleanapp.domain.model.ExifDomainModel;
 import com.woolf.cleanapp.domain.model.LocationDomainModel;
 import com.woolf.cleanapp.domain.model.PhotoDomainModel;
+import com.woolf.cleanapp.util.IBackButtonListener;
 import com.woolf.cleanapp.util.view.ProgressView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class PhotoDetailFragment extends BaseFragment implements IPhotoDetailView {
+public class PhotoDetailFragment extends BaseFragment implements IPhotoDetailView, IBackButtonListener {
 
     public static final String ID = "PhotoDetailFragment.ID";
     public static final String HEIGHT = "PhotoDetailFragment.HEIGHT";
@@ -38,6 +40,8 @@ public class PhotoDetailFragment extends BaseFragment implements IPhotoDetailVie
 
     @BindView(R.id.pv_detail_photo)
     ProgressView pvLoad;
+    @BindView(R.id.iv_detail_favorites)
+    ImageView ivFavorite;
 
     @BindView(R.id.sdv_detail_photo)
     SimpleDraweeView sdvPhoto;
@@ -95,6 +99,12 @@ public class PhotoDetailFragment extends BaseFragment implements IPhotoDetailVie
 
     @OnClick(R.id.iv_detail_back)
     void onBackClick() {
+        detailPresenter.onBackPressed();
+    }
+
+    @OnClick(R.id.iv_detail_favorites)
+    void onFavoriteClick() {
+        detailPresenter.onFavoriteClick();
     }
 
 
@@ -157,10 +167,27 @@ public class PhotoDetailFragment extends BaseFragment implements IPhotoDetailVie
 
     }
 
+    @Override
+    public void setIsFavorite() {
+        ivFavorite.setImageResource(R.drawable.ic_favorite_fill);
+    }
+
+    @Override
+    public void setIsNotFavorite() {
+        ivFavorite.setImageResource(R.drawable.ic_favorite);
+    }
+
     private void configImageView() {
         Integer height = getArguments().getInt(HEIGHT);
         Integer width = getArguments().getInt(WIDTH);
         ConstraintLayout.LayoutParams params = (ConstraintLayout.LayoutParams) sdvPhoto.getLayoutParams();
         params.dimensionRatio = "w," + height + ":" + width;
+    }
+
+
+    @Override
+    public boolean onBackPressed() {
+        detailPresenter.onBackPressed();
+        return true;
     }
 }

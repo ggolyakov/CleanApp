@@ -4,23 +4,27 @@ package com.woolf.cleanapp.di.app.module;
 import android.content.Context;
 
 import com.woolf.cleanapp.data.util.IPreferenceUtils;
-import com.woolf.cleanapp.data.util.PrefenceUtils;
+import com.woolf.cleanapp.data.util.PreferenceUtils;
+import com.woolf.cleanapp.domain.executor.IThreadExecutor;
+import com.woolf.cleanapp.util.ResUtils;
 
-import javax.inject.Named;
 import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
-import io.reactivex.Scheduler;
 
 @Module
 public class UtilsModule {
 
     @Provides
     @Singleton
-    public IPreferenceUtils providePreferenceUtils(Context context,
-                                                   @Named(ThreadingModule.MAIN_SCHEDULER) Scheduler mainScheduler,
-                                                   @Named(ThreadingModule.BACKGROUND_SCHEDULER) Scheduler backgroundScheduler) {
-        return new PrefenceUtils(context, mainScheduler, backgroundScheduler);
+    public IPreferenceUtils providePreferenceUtils(Context context, IThreadExecutor threadExecutor) {
+        return new PreferenceUtils(context, threadExecutor);
+    }
+
+    @Provides
+    @Singleton
+    public ResUtils provideResUtils(Context context) {
+        return new ResUtils(context);
     }
 }

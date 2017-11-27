@@ -18,6 +18,7 @@ public interface IPhotoDetailView extends MvpView {
 
     @StateStrategyType(AddToEndSingleStrategy.class)
     void showError(String error);
+
     void fillImage(PhotoDomainModel domainModel);
 
     void fillUserInfo(PhotoDomainModel domainModel);
@@ -27,5 +28,9 @@ public interface IPhotoDetailView extends MvpView {
     void fillExifInfo(ExifDomainModel exif);
 
     void hideExifInfo();
+
+    void setIsFavorite();
+
+    void setIsNotFavorite();
 
 }

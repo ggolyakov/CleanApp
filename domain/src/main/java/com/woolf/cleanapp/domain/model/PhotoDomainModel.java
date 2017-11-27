@@ -15,6 +15,8 @@ public class PhotoDomainModel implements Serializable {
     private ExifDomainModel exif;
     private LocationDomainModel location;
 
+    private Boolean isFavorite;
+
     public String getId() {
         return id;
     }
@@ -85,5 +87,13 @@ public class PhotoDomainModel implements Serializable {
 
     public void setLocation(LocationDomainModel location) {
         this.location = location;
+    }
+
+    public Boolean getFavorite() {
+        return isFavorite;
+    }
+
+    public void setFavorite(Boolean favorite) {
+        isFavorite = favorite;
     }
 }

@@ -2,7 +2,6 @@
 <android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -10,9 +9,9 @@
         android:id="@+id/iv_detail_back"
         android:layout_width="32dp"
         android:layout_height="32dp"
-        android:layout_marginTop="16dp"
         android:layout_marginStart="8dp"
-        android:background="?android:attr/selectableItemBackground"
+        android:layout_marginTop="16dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
         android:padding="8dp"
         android:src="@drawable/ic_left_arrow"
         app:layout_constraintStart_toStartOf="parent"
@@ -24,6 +23,7 @@
         android:layout_height="32dp"
         android:layout_marginEnd="16dp"
         android:layout_marginTop="16dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
         android:src="@drawable/ic_favorite"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
@@ -398,7 +398,6 @@
                 android:textSize="14sp"
                 app:layout_constraintBaseline_toBaselineOf="@+id/tv_detail_location_city_key"
                 app:layout_constraintEnd_toEndOf="@+id/gl"/>
-
 
 
         </android.support.constraint.ConstraintLayout>

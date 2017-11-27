@@ -3,17 +3,16 @@ package com.woolf.cleanapp.domain.repository;
 
 import com.woolf.cleanapp.domain.model.PhotoDomainModel;
 
+import java.util.List;
 import java.util.Map;
 
 import io.reactivex.Single;
 
-public interface IPhotoRepository {
+public interface IPhotosRepository {
 
-    Single<Boolean> isFavorite(String id);
+    Single<List<PhotoDomainModel>> getPhotos(Map<String, String> params);
 
-    Single<Boolean> addToFavorite(PhotoDomainModel photo);
-
-    Single<Boolean> removeFromFavorite(String id);
+    Single<List<PhotoDomainModel>> getFavorites();
 
     Single<PhotoDomainModel> getPhotoById(String id, Map<String, String> params);
 }
