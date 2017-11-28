@@ -1,5 +1,8 @@
 package com.woolf.cleanapp.di.app.module;
 
+import com.woolf.cleanapp.di.app.qualifier.Global;
+import com.woolf.cleanapp.di.app.qualifier.Local;
+
 import javax.inject.Singleton;
 
 import dagger.Module;
@@ -10,21 +13,40 @@ import ru.terrakok.cicerone.Router;
 
 @Module
 public class NavigationModule {
-    private Cicerone<Router> cicerone;
+
+    private Cicerone<Router> localCicerone;
+    private Cicerone<Router> globalCicerone;
 
     public NavigationModule() {
-        cicerone = Cicerone.create();
+        localCicerone = Cicerone.create();
+        globalCicerone = Cicerone.create();
     }
 
     @Provides
     @Singleton
-    Router provideRouter() {
-        return cicerone.getRouter();
+    @Local
+    Router provideLocalRouter() {
+        return localCicerone.getRouter();
     }
 
     @Provides
     @Singleton
-    NavigatorHolder provideNavigatorHolder() {
-        return cicerone.getNavigatorHolder();
+    @Local
+    NavigatorHolder provideLocalNavigatorHolder() {
+        return localCicerone.getNavigatorHolder();
+    }
+
+    @Provides
+    @Singleton
+    @Global
+    Router provideGlobalRouter() {
+        return globalCicerone.getRouter();
+    }
+
+    @Provides
+    @Singleton
+    @Global
+    NavigatorHolder provideGlobalNavigatorHolder() {
+        return globalCicerone.getNavigatorHolder();
     }
 }

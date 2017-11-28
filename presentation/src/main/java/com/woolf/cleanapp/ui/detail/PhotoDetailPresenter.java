@@ -5,6 +5,7 @@ import com.arellomobile.mvp.InjectViewState;
 import com.woolf.cleanapp.BuildConfig;
 import com.woolf.cleanapp.base.BasePresenter;
 import com.woolf.cleanapp.di.ComponentManager;
+import com.woolf.cleanapp.di.app.qualifier.Global;
 import com.woolf.cleanapp.domain.interactor.AddToFavoritesUseCase;
 import com.woolf.cleanapp.domain.interactor.PhotoByIdUseCase;
 import com.woolf.cleanapp.domain.interactor.RemoveFromFavoritesUseCase;
@@ -31,6 +32,7 @@ public class PhotoDetailPresenter extends BasePresenter<IPhotoDetailView> {
     RemoveFromFavoritesUseCase removeFromFavoritesUseCase;
 
     @Inject
+    @Global
     Router router;
 
     private String photoId;

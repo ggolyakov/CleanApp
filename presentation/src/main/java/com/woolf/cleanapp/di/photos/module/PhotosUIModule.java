@@ -5,6 +5,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 
 import com.woolf.cleanapp.di.photos.PhotosScope;
+import com.woolf.cleanapp.util.adapter.FavoriteAdapter;
 import com.woolf.cleanapp.util.adapter.PhotoAdapter;
 
 import dagger.Module;
@@ -21,11 +22,18 @@ public class PhotosUIModule {
     }
 
     @Provides
+    @PhotosScope
+    FavoriteAdapter provideFavoritesAdapter() {
+        return new FavoriteAdapter();
+    }
+
+    @Provides
     LinearLayoutManager provideLinearLayotManager(Context context) {
         return new LinearLayoutManager(context);
     }
+
     @Provides
-    GridLayoutManager provodeGridLayoutManager(Context context) {
+    GridLayoutManager provideGridLayoutManager(Context context) {
         return new GridLayoutManager(context, SPAN_COUNT);
     }
 }

@@ -17,7 +17,7 @@ import com.woolf.cleanapp.di.ComponentManager;
 import com.woolf.cleanapp.domain.model.PhotoDomainModel;
 import com.woolf.cleanapp.util.IBackButtonListener;
 import com.woolf.cleanapp.util.ResUtils;
-import com.woolf.cleanapp.util.adapter.PhotoAdapter;
+import com.woolf.cleanapp.util.adapter.FavoriteAdapter;
 import com.woolf.cleanapp.util.view.EmptyView;
 import com.woolf.cleanapp.util.view.ProgressView;
 
@@ -41,14 +41,14 @@ public class FavoritesFragment extends BaseFragment implements IFavoritesView, I
     @BindView(R.id.rv_favorites)
     RecyclerView rvFavorites;
 
-    @Inject
-    PhotoAdapter photoAdapter;
+    FavoriteAdapter favoriteAdapter;
     @Inject
     Provider<LinearLayoutManager> linearLayoutManager;
     @Inject
     Provider<GridLayoutManager> gridLayoutManager;
     @Inject
     ResUtils resUtils;
+
 
     private boolean isLandscape;
 
@@ -70,9 +70,10 @@ public class FavoritesFragment extends BaseFragment implements IFavoritesView, I
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
         pvLoad.setRetryClickListener(this);
+        favoriteAdapter = new FavoriteAdapter();
+        rvFavorites.setAdapter(favoriteAdapter);
         rvFavorites.setLayoutManager(isLandscape ? gridLayoutManager.get() : linearLayoutManager.get());
-        rvFavorites.setAdapter(photoAdapter);
-        photoAdapter.setClickListener(photoDomainModel -> presenter.openDetailScreen(photoDomainModel));
+        favoriteAdapter.setClickListener(photoDomainModel -> presenter.openDetailScreen(photoDomainModel));
     }
 
     @Override
@@ -92,7 +93,12 @@ public class FavoritesFragment extends BaseFragment implements IFavoritesView, I
 
     @Override
     public void showList(List<PhotoDomainModel> photos) {
-        photoAdapter.swap(photos);
+        favoriteAdapter.swap(photos);
+        if (!presenter.isInRestoreState(this)) {
+            rvFavorites.scheduleLayoutAnimation();
+        } else {
+            rvFavorites.setLayoutAnimation(null);
+        }
     }
 
     @Override

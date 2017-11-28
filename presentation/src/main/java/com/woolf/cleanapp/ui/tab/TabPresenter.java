@@ -1,10 +1,11 @@
-package com.woolf.cleanapp.ui.main;
+package com.woolf.cleanapp.ui.tab;
 
 
 import com.arellomobile.mvp.InjectViewState;
 import com.woolf.cleanapp.base.BasePresenter;
 import com.woolf.cleanapp.di.ComponentManager;
 import com.woolf.cleanapp.di.app.qualifier.Global;
+import com.woolf.cleanapp.di.app.qualifier.Local;
 import com.woolf.cleanapp.util.Screens;
 
 import javax.inject.Inject;
@@ -12,13 +13,17 @@ import javax.inject.Inject;
 import ru.terrakok.cicerone.Router;
 
 @InjectViewState
-public class MainPresenter extends BasePresenter<IMainView> {
+public class TabPresenter extends BasePresenter<ITabView> {
+
+    @Inject
+    @Local
+    Router router;
 
     @Inject
     @Global
-    Router router;
+    Router globalRouter;
 
-    public MainPresenter() {
+    public TabPresenter() {
         ComponentManager.getInstance().getAppComponent().inject(this);
     }
 
@@ -29,11 +34,19 @@ public class MainPresenter extends BasePresenter<IMainView> {
     }
 
     public void openMainScreen() {
-        router.newRootScreen(Screens.TAB);
+        router.replaceScreen(Screens.MAIN);
+    }
+
+    public void openFavoritesScreen() {
+        router.replaceScreen(Screens.FAVORITES);
+    }
+
+    public void openInfoScreen() {
+        router.replaceScreen(Screens.INFO);
     }
 
     @Override
     public void onBackPressed() {
-
+        globalRouter.exit();
     }
 }

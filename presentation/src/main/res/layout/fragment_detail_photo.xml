@@ -9,10 +9,10 @@
         android:id="@+id/iv_detail_back"
         android:layout_width="32dp"
         android:layout_height="32dp"
-        android:layout_marginTop="16dp"
         android:layout_marginStart="8dp"
-        android:padding="8dp"
+        android:layout_marginTop="16dp"
         android:background="?attr/selectableItemBackgroundBorderless"
+        android:padding="8dp"
         android:src="@drawable/ic_left_arrow"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
@@ -415,7 +415,7 @@
         app:pv_retry_button_height="40dp"
         app:pv_retry_button_text="Retry"
         app:pv_retry_button_text_color="@color/white"
-        app:pv_state="complete"/>
+        app:pv_state="progress"/>
 
 
 </android.support.constraint.ConstraintLayout>

@@ -7,8 +7,11 @@ import com.woolf.cleanapp.di.app.module.NavigationModule;
 import com.woolf.cleanapp.di.app.module.ThreadingModule;
 import com.woolf.cleanapp.di.app.module.UtilsModule;
 import com.woolf.cleanapp.di.photos.PhotosComponent;
+import com.woolf.cleanapp.ui.info.InfoFragment;
 import com.woolf.cleanapp.ui.main.MainActivity;
 import com.woolf.cleanapp.ui.main.MainPresenter;
+import com.woolf.cleanapp.ui.tab.TabFragment;
+import com.woolf.cleanapp.ui.tab.TabPresenter;
 
 import javax.inject.Singleton;
 
@@ -28,6 +31,12 @@ public interface AppComponent {
 
     void inject(MainActivity activity);
 
-    void inject(MainPresenter mainPresenter);
+    void inject(MainPresenter presenter);
+
+    void inject(TabPresenter mainPresenter);
+
+    void inject(TabFragment fragment);
+
+    void inject(InfoFragment infoFragment);
 
 }

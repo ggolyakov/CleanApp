@@ -15,13 +15,13 @@ import butterknife.BindView;
 public class PhotoHolder extends AbstractHolder<PhotoDomainModel> {
 
     @BindView(R.id.sdv_photo)
-    SimpleDraweeView sdvPhoto;
+    protected SimpleDraweeView sdvPhoto;
     @BindView(R.id.sdv_avatar)
-    SimpleDraweeView sdvAvatar;
+    protected SimpleDraweeView sdvAvatar;
     @BindView(R.id.tv_title)
-    TextView tvTitle;
+    protected TextView tvTitle;
     @BindView(R.id.tv_likes)
-    TextView tvLikes;
+    protected TextView tvLikes;
 
     public PhotoHolder(View itemView) {
         super(itemView);
@@ -37,7 +37,8 @@ public class PhotoHolder extends AbstractHolder<PhotoDomainModel> {
         tvLikes.setText(String.valueOf(model.getLikes()));
     }
 
-    private String getUsername(){
+    private String getUsername() {
         return model.getUser().getFirstName() + " " + model.getUser().getLastName();
     }
+
 }

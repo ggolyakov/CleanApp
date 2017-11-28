@@ -7,10 +7,6 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Server Kurtnebiev on 02.03.2017.
- * Core
- */
 
 public abstract class AbstractRecyclerViewAdapter<DATA, HOLDER extends AbstractHolder<DATA>>
         extends RecyclerView.Adapter<HOLDER> {

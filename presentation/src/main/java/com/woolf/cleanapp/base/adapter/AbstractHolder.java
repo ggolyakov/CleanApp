@@ -6,10 +6,6 @@ import android.view.View;
 
 import butterknife.ButterKnife;
 
-/**
- * Created by Server Kurtnebiev on 02.03.2017.
- * Core
- */
 
 public abstract class AbstractHolder<DATA> extends RecyclerView.ViewHolder {
 

@@ -5,6 +5,7 @@ import com.arellomobile.mvp.InjectViewState;
 import com.woolf.cleanapp.BuildConfig;
 import com.woolf.cleanapp.base.BasePresenter;
 import com.woolf.cleanapp.di.ComponentManager;
+import com.woolf.cleanapp.di.app.qualifier.Global;
 import com.woolf.cleanapp.domain.interactor.PhotosUseCase;
 import com.woolf.cleanapp.domain.model.PhotoDomainModel;
 import com.woolf.cleanapp.util.RequestParams;
@@ -24,7 +25,9 @@ public class PhotosPresenter extends BasePresenter<IPhotosView> {
     @Inject
     PhotosUseCase photosUseCase;
 
+
     @Inject
+    @Global
     Router router;
 
     private HashMap<String, String> params;

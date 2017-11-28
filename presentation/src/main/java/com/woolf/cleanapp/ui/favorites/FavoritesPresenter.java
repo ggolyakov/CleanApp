@@ -4,6 +4,7 @@ package com.woolf.cleanapp.ui.favorites;
 import com.arellomobile.mvp.InjectViewState;
 import com.woolf.cleanapp.base.BasePresenter;
 import com.woolf.cleanapp.di.ComponentManager;
+import com.woolf.cleanapp.di.app.qualifier.Global;
 import com.woolf.cleanapp.domain.interactor.FavoritesUseCase;
 import com.woolf.cleanapp.domain.model.PhotoDomainModel;
 import com.woolf.cleanapp.util.Screens;
@@ -22,6 +23,7 @@ public class FavoritesPresenter extends BasePresenter<IFavoritesView> {
     FavoritesUseCase favoritesUseCase;
 
     @Inject
+    @Global
     Router router;
 
 
@@ -37,7 +39,7 @@ public class FavoritesPresenter extends BasePresenter<IFavoritesView> {
     }
 
     public void openDetailScreen(PhotoDomainModel model) {
-        router.navigateTo(Screens.DETAIL, model);
+        router.newScreenChain(Screens.DETAIL, model);
     }
 
     private void loadFavorites() {
@@ -47,10 +49,10 @@ public class FavoritesPresenter extends BasePresenter<IFavoritesView> {
         favoritesUseCase.execute(new DisposableSingleObserver<List<PhotoDomainModel>>() {
             @Override
             public void onSuccess(List<PhotoDomainModel> photoDomainModels) {
+                getViewState().showList(photoDomainModels);
                 if (photoDomainModels == null || photoDomainModels.isEmpty()) {
                     getViewState().showEmptyListView();
                 }
-                getViewState().showList(photoDomainModels);
                 getViewState().hideProgress();
             }
 

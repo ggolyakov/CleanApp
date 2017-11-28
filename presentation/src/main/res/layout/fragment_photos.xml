@@ -9,6 +9,7 @@
         android:id="@+id/rv_photos"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layoutAnimation="@anim/layout_animation_slide_from_bottom"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -18,12 +19,13 @@
 
     <com.woolf.cleanapp.util.view.ProgressView
         android:id="@+id/pv_load_photos"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:pv_background_color="@color/default_background"
         app:pv_error_text="Error"
         app:pv_error_text_color="@color/white"
         app:pv_error_text_margin_bottom="8dp"
@@ -34,7 +36,7 @@
         app:pv_retry_button_height="40dp"
         app:pv_retry_button_text="Retry"
         app:pv_retry_button_text_color="@color/white"
-        app:pv_state="complete"/>
+        app:pv_state="progress"/>
 
 
 </android.support.constraint.ConstraintLayout>

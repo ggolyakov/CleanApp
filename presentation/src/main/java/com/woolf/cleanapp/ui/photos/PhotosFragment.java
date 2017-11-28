@@ -38,14 +38,16 @@ public class PhotosFragment extends BaseFragment implements IPhotosView, IBackBu
     @BindView(R.id.pv_load_photos)
     ProgressView pvLoad;
 
-    @Inject
+
     PhotoAdapter photoAdapter;
+
     @Inject
     Provider<LinearLayoutManager> linearLayoutManager;
     @Inject
     Provider<GridLayoutManager> gridLayoutManager;
     @Inject
     ResUtils resUtils;
+
 
     private boolean isLandscape;
 
@@ -68,11 +70,11 @@ public class PhotosFragment extends BaseFragment implements IPhotosView, IBackBu
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
         pvLoad.setRetryClickListener(this);
-        rvPhotos.setLayoutManager(isLandscape ? gridLayoutManager.get() : linearLayoutManager.get());
+        photoAdapter = new PhotoAdapter();
         rvPhotos.setAdapter(photoAdapter);
+        rvPhotos.setLayoutManager(isLandscape ? gridLayoutManager.get() : linearLayoutManager.get());
         photoAdapter.setClickListener(photoDomainModel -> photosPresenter.openDetailScreen(photoDomainModel));
     }
-
 
 
     @Override
@@ -93,6 +95,11 @@ public class PhotosFragment extends BaseFragment implements IPhotosView, IBackBu
     @Override
     public void showList(List<PhotoDomainModel> photos) {
         photoAdapter.swap(photos);
+        if (!photosPresenter.isInRestoreState(this)) {
+            rvPhotos.scheduleLayoutAnimation();
+        } else {
+            rvPhotos.setLayoutAnimation(null);
+        }
 
     }
 

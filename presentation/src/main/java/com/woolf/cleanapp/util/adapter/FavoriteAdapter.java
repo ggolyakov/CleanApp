@@ -8,9 +8,9 @@ import com.woolf.cleanapp.base.adapter.AbstractRecyclerViewAdapter;
 import com.woolf.cleanapp.domain.model.PhotoDomainModel;
 import com.woolf.cleanapp.util.holder.PhotoHolder;
 
-public class PhotoAdapter extends AbstractRecyclerViewAdapter<PhotoDomainModel, PhotoHolder> {
+public class FavoriteAdapter extends AbstractRecyclerViewAdapter<PhotoDomainModel, PhotoHolder> {
 
-    public PhotoAdapter() {
+    public FavoriteAdapter() {
         super(R.layout.item_photo);
     }
 
