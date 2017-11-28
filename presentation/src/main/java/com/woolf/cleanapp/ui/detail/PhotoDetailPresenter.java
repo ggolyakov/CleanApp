@@ -12,6 +12,7 @@ import com.woolf.cleanapp.domain.interactor.RemoveFromFavoritesUseCase;
 import com.woolf.cleanapp.domain.model.PhotoDomainModel;
 import com.woolf.cleanapp.util.RequestParams;
 import com.woolf.cleanapp.util.Screens;
+import com.woolf.cleanapp.util.helper.ErrorHandler;
 
 import java.util.HashMap;
 
@@ -30,6 +31,8 @@ public class PhotoDetailPresenter extends BasePresenter<IPhotoDetailView> {
     AddToFavoritesUseCase addToFavoritesUseCase;
     @Inject
     RemoveFromFavoritesUseCase removeFromFavoritesUseCase;
+    @Inject
+    ErrorHandler errorHandler;
 
     @Inject
     @Global
@@ -69,7 +72,7 @@ public class PhotoDetailPresenter extends BasePresenter<IPhotoDetailView> {
 
             @Override
             public void onError(Throwable e) {
-                getViewState().showError(e.getMessage());
+                getViewState().showError(errorHandler.getError(e));
             }
         }, new PhotoByIdUseCase.Params(photoId, params));
     }

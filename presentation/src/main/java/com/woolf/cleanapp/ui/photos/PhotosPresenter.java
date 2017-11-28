@@ -10,6 +10,7 @@ import com.woolf.cleanapp.domain.interactor.PhotosUseCase;
 import com.woolf.cleanapp.domain.model.PhotoDomainModel;
 import com.woolf.cleanapp.util.RequestParams;
 import com.woolf.cleanapp.util.Screens;
+import com.woolf.cleanapp.util.helper.ErrorHandler;
 
 import java.util.HashMap;
 import java.util.List;
@@ -24,7 +25,8 @@ public class PhotosPresenter extends BasePresenter<IPhotosView> {
 
     @Inject
     PhotosUseCase photosUseCase;
-
+    @Inject
+    ErrorHandler errorHandler;
 
     @Inject
     @Global
@@ -62,7 +64,7 @@ public class PhotosPresenter extends BasePresenter<IPhotosView> {
 
             @Override
             public void onError(Throwable e) {
-                getViewState().showError(e.getMessage());
+                getViewState().showError(errorHandler.getError(e));
             }
         }, params);
     }

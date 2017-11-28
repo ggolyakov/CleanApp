@@ -3,6 +3,8 @@ package com.woolf.cleanapp.di.app.module;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import com.woolf.cleanapp.data.Environment;
 import com.woolf.cleanapp.data.IApiService;
+import com.woolf.cleanapp.util.ResUtils;
+import com.woolf.cleanapp.util.helper.ErrorHandler;
 
 import javax.inject.Singleton;
 
@@ -25,6 +27,11 @@ public class ApiModule {
         return retrofit.create(IApiService.class);
     }
 
+    @Singleton
+    @Provides
+    public ErrorHandler provideErrorHandler(ResUtils utils) {
+        return new ErrorHandler(utils);
+    }
 
     private Retrofit initRetrofit() {
         final Retrofit.Builder retrofitBuilder =

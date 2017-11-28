@@ -1,8 +1,10 @@
 <resources>
     <string name="app_name">CleanApp</string>
+
     <string name="menu_home">Home</string>
     <string name="menu_favorites">Favorites</string>
     <string name="menu_info">Info</string>
+
     <string name="label_no_data">No Data</string>
     <string name="label_image_info">Image info</string>
     <string name="label_dimensions">Dimensions:</string>
@@ -15,4 +17,14 @@
     <string name="label_location">Location</string>
     <string name="label_country">Country:</string>
     <string name="label_city">City:</string>
+
+    <string name="label_default_value">--</string>
+    <string name="label_image_size">{0} x {1}</string>
+
+
+    <string name="error.connect">There is no connection to the Internet. Please check the network settings</string>
+    <string name="error.limit">Queries limit exceeded. Try later.</string>
+    <string name="error.default">Something went wrong</string>
+    <string name="error.timeout">Too slow internet connection</string>
+
 </resources>

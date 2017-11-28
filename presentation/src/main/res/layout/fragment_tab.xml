@@ -21,8 +21,8 @@
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
         app:itemBackground="@color/colorPrimary"
-        app:itemIconTint="@color/white"
-        app:itemTextColor="@color/white"
+        app:itemIconTint="@color/tab_selector"
+        app:itemTextColor="@color/tab_selector"
         app:layout_constraintBottom_toBottomOf="parent"
         app:menu="@menu/menu_main"/>
 

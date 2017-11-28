@@ -19,11 +19,17 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.facebook.imagepipeline.request.ImageRequest;
 import com.woolf.cleanapp.R;
 import com.woolf.cleanapp.base.BaseFragment;
+import com.woolf.cleanapp.di.ComponentManager;
 import com.woolf.cleanapp.domain.model.ExifDomainModel;
 import com.woolf.cleanapp.domain.model.LocationDomainModel;
 import com.woolf.cleanapp.domain.model.PhotoDomainModel;
 import com.woolf.cleanapp.util.IBackButtonListener;
+import com.woolf.cleanapp.util.ResUtils;
 import com.woolf.cleanapp.util.view.ProgressView;
+
+import java.text.MessageFormat;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -37,6 +43,9 @@ public class PhotoDetailFragment extends BaseFragment implements IPhotoDetailVie
 
     @InjectPresenter
     PhotoDetailPresenter detailPresenter;
+
+    @Inject
+    ResUtils resUtils;
 
     @BindView(R.id.pv_detail_photo)
     ProgressView pvLoad;
@@ -82,6 +91,12 @@ public class PhotoDetailFragment extends BaseFragment implements IPhotoDetailVie
         args.putInt(WIDTH, width);
         photoDetailFragment.setArguments(args);
         return photoDetailFragment;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        ComponentManager.getInstance().getPhotoComponent().inject(this);
     }
 
     @Nullable
@@ -136,7 +151,7 @@ public class PhotoDetailFragment extends BaseFragment implements IPhotoDetailVie
         sdvPhoto.setAspectRatio(domainModel.getWidth().floatValue() / domainModel.getHeight().floatValue());
         sdvPhoto.setController(controller);
 
-        tvDimensions.setText(domainModel.getHeight() + " x " + domainModel.getWidth());
+        tvDimensions.setText(MessageFormat.format(resUtils.getString(R.string.label_image_size), domainModel.getHeight(), domainModel.getWidth()));
     }
 
     @Override

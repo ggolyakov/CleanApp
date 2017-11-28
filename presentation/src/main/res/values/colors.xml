@@ -9,6 +9,8 @@
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
 
+    <color name="disable_item">#830b0b</color>
+
     <color name="default_background">#1d1f23</color>
 
 </resources>

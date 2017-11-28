@@ -40,7 +40,7 @@ public class FavoritesFragment extends BaseFragment implements IFavoritesView, I
     EmptyView evEmptyList;
     @BindView(R.id.rv_favorites)
     RecyclerView rvFavorites;
-
+    @Inject
     FavoriteAdapter favoriteAdapter;
     @Inject
     Provider<LinearLayoutManager> linearLayoutManager;
@@ -70,7 +70,6 @@ public class FavoritesFragment extends BaseFragment implements IFavoritesView, I
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
         pvLoad.setRetryClickListener(this);
-        favoriteAdapter = new FavoriteAdapter();
         rvFavorites.setAdapter(favoriteAdapter);
         rvFavorites.setLayoutManager(isLandscape ? gridLayoutManager.get() : linearLayoutManager.get());
         favoriteAdapter.setClickListener(photoDomainModel -> presenter.openDetailScreen(photoDomainModel));

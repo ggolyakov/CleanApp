@@ -38,9 +38,8 @@ public class PhotosFragment extends BaseFragment implements IPhotosView, IBackBu
     @BindView(R.id.pv_load_photos)
     ProgressView pvLoad;
 
-
+    @Inject
     PhotoAdapter photoAdapter;
-
     @Inject
     Provider<LinearLayoutManager> linearLayoutManager;
     @Inject
@@ -70,7 +69,6 @@ public class PhotosFragment extends BaseFragment implements IPhotosView, IBackBu
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
         pvLoad.setRetryClickListener(this);
-        photoAdapter = new PhotoAdapter();
         rvPhotos.setAdapter(photoAdapter);
         rvPhotos.setLayoutManager(isLandscape ? gridLayoutManager.get() : linearLayoutManager.get());
         photoAdapter.setClickListener(photoDomainModel -> photosPresenter.openDetailScreen(photoDomainModel));
