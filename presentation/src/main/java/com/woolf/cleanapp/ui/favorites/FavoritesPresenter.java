@@ -38,15 +38,23 @@ public class FavoritesPresenter extends BasePresenter<IFavoritesView> {
         loadFavorites();
     }
 
+    @Override
+    public void onBackPressed() {
+        router.exit();
+    }
+
     public void openDetailScreen(PhotoDomainModel model) {
         router.newScreenChain(Screens.DETAIL, model);
     }
 
     private void loadFavorites() {
-        getViewState().hideEmptyListView();
-        getViewState().showProgress();
-
         favoritesUseCase.execute(new DisposableSingleObserver<List<PhotoDomainModel>>() {
+            @Override
+            protected void onStart() {
+                getViewState().hideEmptyListView();
+                getViewState().showProgress();
+            }
+
             @Override
             public void onSuccess(List<PhotoDomainModel> photoDomainModels) {
                 getViewState().showList(photoDomainModels);
@@ -60,27 +68,24 @@ public class FavoritesPresenter extends BasePresenter<IFavoritesView> {
             public void onError(Throwable e) {
                 getViewState().showError(e.getMessage());
             }
-        },null);
+        });
+
 
     }
 
     @Override
     public void onDestroy() {
         removeResultListener();
+        favoritesUseCase.dispose();
         ComponentManager.getInstance().destroyPhotosComponent();
         super.onDestroy();
     }
 
-    public void reload() {
-        getViewState().hideEmptyListView();
-        getViewState().showProgress();
+     void reload() {
         loadFavorites();
     }
 
-    @Override
-    public void onBackPressed() {
-        router.exit();
-    }
+
 
     private void setResultListener() {
         router.setResultListener(Screens.FAVORITES_RESULT, resultData -> {

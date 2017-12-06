@@ -17,7 +17,6 @@ public class RequestParams {
 
     public class Builder {
         private Builder() {
-            // private constructor
         }
 
         public Builder append(String key, String value) {

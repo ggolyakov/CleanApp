@@ -2,12 +2,12 @@ package com.woolf.cleanapp.domain.interactor;
 
 
 import com.woolf.cleanapp.domain.executor.IThreadExecutor;
-import com.woolf.cleanapp.domain.interactor.base.BaseUseCaseWithParams;
+import com.woolf.cleanapp.domain.interactor.base.completable.BaseCompletableUseCaseWithParams;
 import com.woolf.cleanapp.domain.repository.IPhotoRepository;
 
-import io.reactivex.Single;
+import io.reactivex.Completable;
 
-public class RemoveFromFavoritesUseCase extends BaseUseCaseWithParams<Boolean, String> {
+public class RemoveFromFavoritesUseCase extends BaseCompletableUseCaseWithParams<String> {
 
     private IPhotoRepository photoRepository;
 
@@ -17,7 +17,7 @@ public class RemoveFromFavoritesUseCase extends BaseUseCaseWithParams<Boolean, S
     }
 
     @Override
-    protected Single<Boolean> buildUseCaseObservable(String id) {
+    protected Completable buildUseCase(String id) {
         return photoRepository.removeFromFavorite(id);
     }
 

@@ -2,16 +2,15 @@ package com.woolf.cleanapp.domain.interactor;
 
 
 import com.woolf.cleanapp.domain.executor.IThreadExecutor;
-import com.woolf.cleanapp.domain.interactor.base.BaseUseCaseWithParams;
+import com.woolf.cleanapp.domain.interactor.base.single.BaseSingleUseCase;
 import com.woolf.cleanapp.domain.model.PhotoDomainModel;
 import com.woolf.cleanapp.domain.repository.IPhotosRepository;
 
-import java.util.HashMap;
 import java.util.List;
 
 import io.reactivex.Single;
 
-public class FavoritesUseCase extends BaseUseCaseWithParams<List<PhotoDomainModel>, HashMap<String, String>> {
+public class FavoritesUseCase extends BaseSingleUseCase<List<PhotoDomainModel>> {
 
     private IPhotosRepository photoRepository;
 
@@ -21,7 +20,7 @@ public class FavoritesUseCase extends BaseUseCaseWithParams<List<PhotoDomainMode
     }
 
     @Override
-    protected Single<List<PhotoDomainModel>> buildUseCaseObservable(HashMap<String, String> params) {
+    protected Single<List<PhotoDomainModel>> buildUseCase() {
         return photoRepository.getFavorites();
     }
 }

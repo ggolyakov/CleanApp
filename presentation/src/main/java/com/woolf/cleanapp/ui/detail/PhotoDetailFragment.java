@@ -35,7 +35,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class PhotoDetailFragment extends BaseFragment implements IPhotoDetailView, IBackButtonListener {
+public class PhotoDetailFragment extends BaseFragment implements IPhotoDetailView, IBackButtonListener, ProgressView.RetryClickListener {
 
     public static final String ID = "PhotoDetailFragment.ID";
     public static final String HEIGHT = "PhotoDetailFragment.HEIGHT";
@@ -110,6 +110,7 @@ public class PhotoDetailFragment extends BaseFragment implements IPhotoDetailVie
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
         configImageView();
+        pvLoad.setRetryClickListener(this);
     }
 
     @OnClick(R.id.iv_detail_back)
@@ -121,7 +122,6 @@ public class PhotoDetailFragment extends BaseFragment implements IPhotoDetailVie
     void onFavoriteClick() {
         detailPresenter.onFavoriteClick();
     }
-
 
     @Override
     public void showProgress() {
@@ -158,7 +158,7 @@ public class PhotoDetailFragment extends BaseFragment implements IPhotoDetailVie
     public void fillUserInfo(PhotoDomainModel domainModel) {
         Uri avatar = Uri.parse(domainModel.getUser().getProfileImage().getMedium());
         sdvAvatar.setImageURI(avatar);
-        tvUserName.setText(domainModel.getUser().getFirstName() + " " + domainModel.getUser().getLastName());
+        tvUserName.setText(domainModel.getUser().getUsername());
     }
 
     @Override
@@ -175,11 +175,6 @@ public class PhotoDetailFragment extends BaseFragment implements IPhotoDetailVie
         tvAperture.setText(exif.getAperture());
         tvShutterSpeed.setText(exif.getExposureTime());
         tvISO.setText(String.valueOf(exif.getIso()));
-    }
-
-    @Override
-    public void hideExifInfo() {
-
     }
 
     @Override
@@ -204,5 +199,10 @@ public class PhotoDetailFragment extends BaseFragment implements IPhotoDetailVie
     public boolean onBackPressed() {
         detailPresenter.onBackPressed();
         return true;
+    }
+
+    @Override
+    public void onReload() {
+        detailPresenter.reload();
     }
 }

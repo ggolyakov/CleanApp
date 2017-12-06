@@ -2,7 +2,6 @@ package com.woolf.cleanapp.ui.detail;
 
 
 import com.arellomobile.mvp.InjectViewState;
-import com.woolf.cleanapp.BuildConfig;
 import com.woolf.cleanapp.base.BasePresenter;
 import com.woolf.cleanapp.di.ComponentManager;
 import com.woolf.cleanapp.di.app.qualifier.Global;
@@ -10,14 +9,12 @@ import com.woolf.cleanapp.domain.interactor.AddToFavoritesUseCase;
 import com.woolf.cleanapp.domain.interactor.PhotoByIdUseCase;
 import com.woolf.cleanapp.domain.interactor.RemoveFromFavoritesUseCase;
 import com.woolf.cleanapp.domain.model.PhotoDomainModel;
-import com.woolf.cleanapp.util.RequestParams;
 import com.woolf.cleanapp.util.Screens;
 import com.woolf.cleanapp.util.helper.ErrorHandler;
 
-import java.util.HashMap;
-
 import javax.inject.Inject;
 
+import io.reactivex.observers.DisposableCompletableObserver;
 import io.reactivex.observers.DisposableSingleObserver;
 import ru.terrakok.cicerone.Router;
 
@@ -41,40 +38,54 @@ public class PhotoDetailPresenter extends BasePresenter<IPhotoDetailView> {
     private String photoId;
     private Boolean isFavorite;
     private PhotoDomainModel photo;
-    private HashMap<String, String> params;
 
     private boolean isStatusChange = false;
 
     public PhotoDetailPresenter(String photoId) {
         this.photoId = photoId;
         ComponentManager.getInstance().getPhotoComponent().inject(this);
-        params = RequestParams.newBuilder()
-                .append("client_id", BuildConfig.UnsplashApiId)
-                .build();
     }
 
     @Override
     protected void onFirstViewAttach() {
         super.onFirstViewAttach();
-        getViewState().showProgress();
-        photoByIdUseCase.execute(new DisposableSingleObserver<PhotoDomainModel>() {
-            @Override
-            public void onSuccess(PhotoDomainModel photoDomainModel) {
-                photo = photoDomainModel;
-                isFavorite = photoDomainModel.getFavorite();
-                updateFavorite();
-                getViewState().fillImage(photoDomainModel);
-                getViewState().fillUserInfo(photoDomainModel);
-                getViewState().fillExifInfo(photoDomainModel.getExif());
-                getViewState().fillLocationInfo(photoDomainModel.getLocation());
-                getViewState().hideProgress();
-            }
+        loadPhoto();
+    }
 
-            @Override
-            public void onError(Throwable e) {
-                getViewState().showError(errorHandler.getError(e));
-            }
-        }, new PhotoByIdUseCase.Params(photoId, params));
+    private void loadPhoto() {
+        photoByIdUseCase.execute(photoId,
+                new DisposableSingleObserver<PhotoDomainModel>() {
+                    @Override
+                    protected void onStart() {
+                        getViewState().showProgress();
+                    }
+
+                    @Override
+                    public void onSuccess(PhotoDomainModel photoDomainModel) {
+                        photo = photoDomainModel;
+                        isFavorite = photoDomainModel.getFavorite();
+                        fillView(photoDomainModel);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        getViewState().showError(errorHandler.getError(e));
+                    }
+                });
+    }
+
+    @Override
+    public void onBackPressed() {
+        router.exitWithResult(Screens.FAVORITES_RESULT, isStatusChange);
+    }
+
+    private void fillView(PhotoDomainModel photo) {
+        updateFavorite();
+        getViewState().fillImage(photo);
+        getViewState().fillUserInfo(photo);
+        getViewState().fillExifInfo(photo.getExif());
+        getViewState().fillLocationInfo(photo.getLocation());
+        getViewState().hideProgress();
     }
 
     private void updateFavorite() {
@@ -86,9 +97,9 @@ public class PhotoDetailPresenter extends BasePresenter<IPhotoDetailView> {
     }
 
     private void addToFavorites() {
-        addToFavoritesUseCase.execute(new DisposableSingleObserver<Boolean>() {
+        addToFavoritesUseCase.execute(photo, new DisposableCompletableObserver() {
             @Override
-            public void onSuccess(Boolean aBoolean) {
+            public void onComplete() {
                 isFavorite = true;
                 photo.setFavorite(true);
                 isStatusChange = !isStatusChange;
@@ -97,15 +108,15 @@ public class PhotoDetailPresenter extends BasePresenter<IPhotoDetailView> {
 
             @Override
             public void onError(Throwable e) {
-
+                updateFavorite();
             }
-        }, photo);
+        });
     }
 
     private void removeFromFavorites() {
-        removeFromFavoritesUseCase.execute(new DisposableSingleObserver<Boolean>() {
+        removeFromFavoritesUseCase.execute(photoId, new DisposableCompletableObserver() {
             @Override
-            public void onSuccess(Boolean aBoolean) {
+            public void onComplete() {
                 isFavorite = false;
                 photo.setFavorite(false);
                 isStatusChange = !isStatusChange;
@@ -114,19 +125,19 @@ public class PhotoDetailPresenter extends BasePresenter<IPhotoDetailView> {
 
             @Override
             public void onError(Throwable e) {
-
+                updateFavorite();
             }
-        }, photoId);
+        });
     }
 
 
     @Override
     public void onDestroy() {
-        super.onDestroy();
         photoByIdUseCase.dispose();
         addToFavoritesUseCase.dispose();
         removeFromFavoritesUseCase.dispose();
         ComponentManager.getInstance().destroyPhotoComponent();
+        super.onDestroy();
     }
 
     public void onFavoriteClick() {
@@ -137,8 +148,8 @@ public class PhotoDetailPresenter extends BasePresenter<IPhotoDetailView> {
         }
     }
 
-    @Override
-    public void onBackPressed() {
-        router.exitWithResult(Screens.FAVORITES_RESULT, isStatusChange);
+    public void reload() {
+        loadPhoto();
     }
+
 }

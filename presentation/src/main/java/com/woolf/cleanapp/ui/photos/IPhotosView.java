@@ -21,5 +21,4 @@ public interface IPhotosView extends MvpView {
 
     @StateStrategyType(SingleStateStrategy.class)
     void showList(List<PhotoDomainModel> photos);
-
 }

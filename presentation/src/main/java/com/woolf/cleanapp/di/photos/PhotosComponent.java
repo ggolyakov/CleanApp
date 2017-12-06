@@ -29,9 +29,6 @@ public interface PhotosComponent {
 
     void inject(FavoritesFragment favoritesFragment);
 
-
-
-
     @Subcomponent.Builder
     interface Builder {
         PhotosComponent build();

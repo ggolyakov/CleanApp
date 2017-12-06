@@ -25,8 +25,6 @@ public interface IPhotoDetailView extends MvpView {
 
     void fillExifInfo(ExifDomainModel exif);
 
-    void hideExifInfo();
-
     void setIsFavorite();
 
     void setIsNotFavorite();

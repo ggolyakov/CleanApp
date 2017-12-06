@@ -74,7 +74,6 @@ public class PhotosFragment extends BaseFragment implements IPhotosView, IBackBu
         photoAdapter.setClickListener(photoDomainModel -> photosPresenter.openDetailScreen(photoDomainModel));
     }
 
-
     @Override
     public void showProgress() {
         pvLoad.onStartLoading();

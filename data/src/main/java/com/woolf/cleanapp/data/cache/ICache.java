@@ -4,6 +4,7 @@ import com.woolf.cleanapp.data.model.cache.PhotoCacheModel;
 
 import java.util.List;
 
+import io.reactivex.Completable;
 import io.reactivex.Single;
 
 public interface ICache {
@@ -14,7 +15,7 @@ public interface ICache {
 
     Single<Boolean> isCached(String id);
 
-    Single<Boolean> addToFavorites(PhotoCacheModel model);
+    Completable addToFavorites(PhotoCacheModel model);
 
-    Single<Boolean> removeFromFavorites(String id);
+    Completable removeFromFavorites(String id);
 }

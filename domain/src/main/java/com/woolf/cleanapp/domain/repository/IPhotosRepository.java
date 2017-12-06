@@ -13,6 +13,4 @@ public interface IPhotosRepository {
     Single<List<PhotoDomainModel>> getPhotos(Map<String, String> params);
 
     Single<List<PhotoDomainModel>> getFavorites();
-
-    Single<PhotoDomainModel> getPhotoById(String id, Map<String, String> params);
 }

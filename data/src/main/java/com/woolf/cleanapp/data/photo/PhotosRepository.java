@@ -3,7 +3,9 @@ package com.woolf.cleanapp.data.photo;
 
 import com.woolf.cleanapp.data.IApiService;
 import com.woolf.cleanapp.data.cache.ICache;
-import com.woolf.cleanapp.data.photo.mapper.IPhotoModelMapper;
+import com.woolf.cleanapp.data.model.cache.PhotoCacheModel;
+import com.woolf.cleanapp.data.model.service.PhotoEntity;
+import com.woolf.cleanapp.data.model.mapper.IModelMapper;
 import com.woolf.cleanapp.domain.model.PhotoDomainModel;
 import com.woolf.cleanapp.domain.repository.IPhotosRepository;
 
@@ -17,10 +19,10 @@ public class PhotosRepository implements IPhotosRepository {
 
     private IApiService apiService;
     private ICache cache;
-    private IPhotoModelMapper mapper;
+    private IModelMapper<PhotoCacheModel, PhotoEntity, PhotoDomainModel> mapper;
 
 
-    public PhotosRepository(IApiService apiService, ICache cache, IPhotoModelMapper mapper) {
+    public PhotosRepository(IApiService apiService, ICache cache, IModelMapper<PhotoCacheModel, PhotoEntity, PhotoDomainModel> mapper) {
         this.apiService = apiService;
         this.cache = cache;
         this.mapper = mapper;
@@ -35,16 +37,4 @@ public class PhotosRepository implements IPhotosRepository {
     public Single<List<PhotoDomainModel>> getFavorites() {
         return cache.getFavorites().map(photoCacheModels -> mapper.mapCacheToDomainList(photoCacheModels));
     }
-
-    @Override
-    public Single<PhotoDomainModel> getPhotoById(String id, Map<String, String> params) {
-        return cache.isCached(id).flatMap(isCached -> {
-            if (!isCached) {
-                return apiService.getPhotoById(id, params).map(domainModel -> mapper.mapEntityToDomain(domainModel));
-            } else {
-                return cache.getPhotoById(id).map(model1 -> mapper.mapCacheToDomain(model1));
-            }
-        });
-    }
-
 }

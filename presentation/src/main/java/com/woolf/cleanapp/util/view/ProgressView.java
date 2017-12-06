@@ -9,7 +9,6 @@ import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.Gravity;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -174,12 +173,9 @@ public class ProgressView extends RelativeLayout {
         btnReload.setTextColor(textColor);
         btnReload.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize);
         btnReload.setAllCaps(false);
-        btnReload.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (retryClickListener != null) {
-                    retryClickListener.onReload();
-                }
+        btnReload.setOnClickListener(v -> {
+            if (retryClickListener != null) {
+                retryClickListener.onReload();
             }
         });
         if (backgroundResId != NONE) {

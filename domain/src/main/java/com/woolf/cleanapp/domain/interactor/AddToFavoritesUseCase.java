@@ -2,13 +2,13 @@ package com.woolf.cleanapp.domain.interactor;
 
 
 import com.woolf.cleanapp.domain.executor.IThreadExecutor;
-import com.woolf.cleanapp.domain.interactor.base.BaseUseCaseWithParams;
+import com.woolf.cleanapp.domain.interactor.base.completable.BaseCompletableUseCaseWithParams;
 import com.woolf.cleanapp.domain.model.PhotoDomainModel;
 import com.woolf.cleanapp.domain.repository.IPhotoRepository;
 
-import io.reactivex.Single;
+import io.reactivex.Completable;
 
-public class AddToFavoritesUseCase extends BaseUseCaseWithParams<Boolean, PhotoDomainModel> {
+public class AddToFavoritesUseCase extends BaseCompletableUseCaseWithParams<PhotoDomainModel> {
 
     private IPhotoRepository photoRepository;
 
@@ -19,7 +19,7 @@ public class AddToFavoritesUseCase extends BaseUseCaseWithParams<Boolean, PhotoD
 
 
     @Override
-    protected Single<Boolean> buildUseCaseObservable(PhotoDomainModel photoDomainModel) {
+    protected Completable buildUseCase(PhotoDomainModel photoDomainModel) {
         return photoRepository.addToFavorite(photoDomainModel);
     }
 }

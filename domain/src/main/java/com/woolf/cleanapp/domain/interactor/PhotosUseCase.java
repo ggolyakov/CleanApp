@@ -2,7 +2,7 @@ package com.woolf.cleanapp.domain.interactor;
 
 
 import com.woolf.cleanapp.domain.executor.IThreadExecutor;
-import com.woolf.cleanapp.domain.interactor.base.BaseUseCaseWithParams;
+import com.woolf.cleanapp.domain.interactor.base.single.BaseSingleUseCaseWithParams;
 import com.woolf.cleanapp.domain.model.PhotoDomainModel;
 import com.woolf.cleanapp.domain.repository.IPhotosRepository;
 
@@ -11,7 +11,7 @@ import java.util.List;
 
 import io.reactivex.Single;
 
-public class PhotosUseCase extends BaseUseCaseWithParams<List<PhotoDomainModel>, HashMap<String, String>> {
+public class PhotosUseCase extends BaseSingleUseCaseWithParams<List<PhotoDomainModel>, HashMap<String, String>> {
 
     private IPhotosRepository photoRepository;
 
@@ -21,7 +21,7 @@ public class PhotosUseCase extends BaseUseCaseWithParams<List<PhotoDomainModel>,
     }
 
     @Override
-    protected Single<List<PhotoDomainModel>> buildUseCaseObservable(HashMap<String, String> params) {
+    protected Single<List<PhotoDomainModel>> buildUseCase(HashMap<String, String> params) {
         return photoRepository.getPhotos(params);
     }
 }

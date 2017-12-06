@@ -1,34 +1,32 @@
-package com.woolf.cleanapp.domain.interactor.base;
+package com.woolf.cleanapp.domain.interactor.base.completable;
 
 import com.woolf.cleanapp.domain.executor.IThreadExecutor;
 
-import io.reactivex.Single;
+import io.reactivex.Completable;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.observers.DisposableSingleObserver;
+import io.reactivex.observers.DisposableCompletableObserver;
 
 
-public abstract class BaseUseCaseWithParams<T, Params> {
+public abstract class BaseCompletableUseCaseWithParams<PARAMS> {
 
     private CompositeDisposable disposables;
     private IThreadExecutor threadExecutor;
 
-    protected abstract Single<T> buildUseCaseObservable(Params params);
+    protected abstract Completable buildUseCase(PARAMS params);
 
-    public BaseUseCaseWithParams(IThreadExecutor threadExecutor) {
+    public BaseCompletableUseCaseWithParams(IThreadExecutor threadExecutor) {
         this.threadExecutor = threadExecutor;
         disposables = new CompositeDisposable();
     }
 
-    /**
-     * Need call
-     */
-    public void execute(final DisposableSingleObserver<T> disposableSubscriber, final Params params) {
-        final Single<T> responseFlowable = getResponseSingle(params);
-        addDisposable(
-                responseFlowable.subscribeWith(disposableSubscriber)
-        );
+
+    public void execute(final PARAMS params, final DisposableCompletableObserver disposableSubscriber) {
+        final Completable response = getResponse(params);
+        response.doOnSubscribe(this::addDisposable)
+                .subscribeWith(disposableSubscriber);
     }
+
 
     public void dispose() {
         if (!disposables.isDisposed()) {
@@ -41,8 +39,8 @@ public abstract class BaseUseCaseWithParams<T, Params> {
         disposables.add(localDisposable);
     }
 
-    private Single<T> getResponseSingle(final Params params) {
-        return buildUseCaseObservable(params)
+    private Completable getResponse(final PARAMS params) {
+        return buildUseCase(params)
                 .subscribeOn(threadExecutor.getBackgroundThread())
                 .observeOn(threadExecutor.getMainThread());
     }

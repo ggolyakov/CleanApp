@@ -2,7 +2,6 @@ package com.woolf.cleanapp.ui.photos;
 
 
 import com.arellomobile.mvp.InjectViewState;
-import com.woolf.cleanapp.BuildConfig;
 import com.woolf.cleanapp.base.BasePresenter;
 import com.woolf.cleanapp.di.ComponentManager;
 import com.woolf.cleanapp.di.app.qualifier.Global;
@@ -37,14 +36,9 @@ public class PhotosPresenter extends BasePresenter<IPhotosView> {
     public PhotosPresenter() {
         ComponentManager.getInstance().getPhotosComponent().inject(this);
         params = RequestParams.newBuilder()
-                .append("client_id", BuildConfig.UnsplashApiId)
                 .append("per_page", "30")
                 .build();
 
-    }
-
-    public void openDetailScreen(PhotoDomainModel model) {
-        router.navigateTo(Screens.DETAIL, model);
     }
 
     @Override
@@ -54,8 +48,12 @@ public class PhotosPresenter extends BasePresenter<IPhotosView> {
     }
 
     private void loadPhotos() {
-        getViewState().showProgress();
-        photosUseCase.execute(new DisposableSingleObserver<List<PhotoDomainModel>>() {
+        photosUseCase.execute(params, new DisposableSingleObserver<List<PhotoDomainModel>>() {
+            @Override
+            protected void onStart() {
+                getViewState().showProgress();
+            }
+
             @Override
             public void onSuccess(List<PhotoDomainModel> photoDomainModels) {
                 getViewState().showList(photoDomainModels);
@@ -66,13 +64,14 @@ public class PhotosPresenter extends BasePresenter<IPhotosView> {
             public void onError(Throwable e) {
                 getViewState().showError(errorHandler.getError(e));
             }
-        }, params);
+        });
     }
 
     @Override
     public void onDestroy() {
-        super.onDestroy();
+        photosUseCase.dispose();
         ComponentManager.getInstance().destroyPhotosComponent();
+        super.onDestroy();
     }
 
     @Override
@@ -80,7 +79,12 @@ public class PhotosPresenter extends BasePresenter<IPhotosView> {
         router.exit();
     }
 
-    public void reload() {
+    public void openDetailScreen(PhotoDomainModel model) {
+        router.navigateTo(Screens.DETAIL, model);
+    }
+
+    void reload() {
         loadPhotos();
     }
+
 }

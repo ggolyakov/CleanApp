@@ -1,6 +1,7 @@
 package com.woolf.cleanapp.di.app.module;
 
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
+import com.woolf.cleanapp.BuildConfig;
 import com.woolf.cleanapp.data.Environment;
 import com.woolf.cleanapp.data.IApiService;
 import com.woolf.cleanapp.util.ResUtils;
@@ -10,6 +11,7 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import retrofit2.CallAdapter;
@@ -55,9 +57,14 @@ public class ApiModule {
     private OkHttpClient initOkHttpClient() {
         final OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
         httpClient.addInterceptor(chain -> {
-            Request.Builder builder = chain.request().newBuilder();
-            builder.addHeader(Environment.HEADER_ACCEPT_VERSION, Environment.HEADER_ACCEPT_VERSION_VALUE);
-            return chain.proceed(builder.build());
+            Request original = chain.request();
+            HttpUrl originalHttpUrl = original.url();
+            HttpUrl url = originalHttpUrl.newBuilder().addQueryParameter(Environment.CLIENT_ID, BuildConfig.UnsplashApiId).build();
+            Request.Builder requestBuilder = original.newBuilder().url(url);
+            requestBuilder.addHeader(Environment.HEADER_ACCEPT_VERSION, Environment.HEADER_ACCEPT_VERSION_VALUE);
+            Request request = requestBuilder.build();
+            return chain.proceed(request);
+
         });
         return httpClient.build();
     }

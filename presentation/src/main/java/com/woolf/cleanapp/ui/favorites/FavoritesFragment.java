@@ -40,6 +40,7 @@ public class FavoritesFragment extends BaseFragment implements IFavoritesView, I
     EmptyView evEmptyList;
     @BindView(R.id.rv_favorites)
     RecyclerView rvFavorites;
+
     @Inject
     FavoriteAdapter favoriteAdapter;
     @Inject

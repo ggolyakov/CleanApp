@@ -33,12 +33,10 @@ public class PhotoHolder extends AbstractHolder<PhotoDomainModel> {
         Uri avatar = Uri.parse(model.getUser().getProfileImage().getMedium());
         sdvPhoto.setImageURI(image);
         sdvAvatar.setImageURI(avatar);
-        tvTitle.setText(getUsername());
+        tvTitle.setText(model.getUser().getUsername());
         tvLikes.setText(String.valueOf(model.getLikes()));
     }
 
-    private String getUsername() {
-        return model.getUser().getFirstName() + " " + model.getUser().getLastName();
-    }
+
 
 }

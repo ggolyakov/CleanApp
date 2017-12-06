@@ -3,17 +3,14 @@ package com.woolf.cleanapp.domain.repository;
 
 import com.woolf.cleanapp.domain.model.PhotoDomainModel;
 
-import java.util.Map;
-
+import io.reactivex.Completable;
 import io.reactivex.Single;
 
 public interface IPhotoRepository {
 
-    Single<Boolean> isFavorite(String id);
+    Completable addToFavorite(PhotoDomainModel photo);
 
-    Single<Boolean> addToFavorite(PhotoDomainModel photo);
+    Completable removeFromFavorite(String id);
 
-    Single<Boolean> removeFromFavorite(String id);
-
-    Single<PhotoDomainModel> getPhotoById(String id, Map<String, String> params);
+    Single<PhotoDomainModel> getPhotoById(String id);
 }

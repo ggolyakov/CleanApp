@@ -17,5 +17,5 @@ public interface IApiService {
     Single<List<PhotoEntity>> getPhotos(@QueryMap Map<String, String> options);
 
     @GET("photos/{id}")
-    Single<PhotoEntity> getPhotoById(@Path("id") String id, @QueryMap Map<String, String> options);
+    Single<PhotoEntity> getPhotoById(@Path("id") String id);
 }

@@ -5,6 +5,7 @@ import com.woolf.cleanapp.data.model.cache.PhotoCacheModel;
 
 import java.util.List;
 
+import io.reactivex.Completable;
 import io.reactivex.Single;
 import io.realm.Realm;
 import io.realm.RealmResults;
@@ -27,13 +28,13 @@ public class Cache implements ICache {
     }
 
     @Override
-    public Single<Boolean> addToFavorites(PhotoCacheModel model) {
-        return Single.fromCallable(() -> putSync(model));
+    public Completable addToFavorites(PhotoCacheModel model) {
+        return Completable.fromCallable(() -> putSync(model));
     }
 
     @Override
-    public Single<Boolean> removeFromFavorites(String id) {
-        return Single.fromCallable(() -> removeSync(id));
+    public Completable removeFromFavorites(String id) {
+        return Completable.fromCallable(() -> removeSync(id));
     }
 
 

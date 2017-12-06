@@ -7,6 +7,7 @@ import com.woolf.cleanapp.data.model.cache.PhotoCacheModel;
 import com.woolf.cleanapp.data.model.cache.ProfileImageCacheModel;
 import com.woolf.cleanapp.data.model.cache.UrlsCacheModel;
 import com.woolf.cleanapp.data.model.cache.UserCacheModel;
+import com.woolf.cleanapp.data.model.mapper.IModelMapper;
 import com.woolf.cleanapp.data.model.service.ExifEntity;
 import com.woolf.cleanapp.data.model.service.LocationEntity;
 import com.woolf.cleanapp.data.model.service.PhotoEntity;
@@ -23,7 +24,7 @@ import com.woolf.cleanapp.domain.model.UserDomainModel;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PhotoModelMapper implements IPhotoModelMapper {
+public class PhotoModelMapper implements IModelMapper<PhotoCacheModel,PhotoEntity,PhotoDomainModel> {
 
     @Override
     public PhotoDomainModel mapEntityToDomain(PhotoEntity photo) {
