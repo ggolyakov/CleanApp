@@ -10,6 +10,11 @@ import io.realm.Realm;
 
 public class CleanApplication extends Application {
 
+    /**
+     * @author Gennadiy Golyakov <g.golyakov91@gmail.com">
+     * See <a href="https://github.com/ggolyakov/CleanApp">Github</a>
+     */
+
     @Override
     public void onCreate() {
         super.onCreate();
