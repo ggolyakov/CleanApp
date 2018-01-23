@@ -1,6 +1,8 @@
 package com.woolf.cleanapp.ui.detail;
 
 
+import android.support.annotation.VisibleForTesting;
+
 import com.arellomobile.mvp.InjectViewState;
 import com.woolf.cleanapp.base.BasePresenter;
 import com.woolf.cleanapp.di.ComponentManager;
@@ -152,4 +154,8 @@ public class PhotoDetailPresenter extends BasePresenter<IPhotoDetailView> {
         loadPhoto();
     }
 
+    @VisibleForTesting
+    public void setFavorite(Boolean favorite) {
+        isFavorite = favorite;
+    }
 }

@@ -1,6 +1,6 @@
 package com.woolf.cleanapp.util;
 
-
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 
 import com.woolf.cleanapp.domain.model.PhotoDomainModel;
@@ -15,7 +15,7 @@ public class FragmentFactory {
     private FragmentFactory() {
     }
 
-    public static Fragment getFragmentByKey(final String key, final Object data) {
+    public static Fragment getFragmentByKey(@NonNull final String key, final Object data) {
         switch (key) {
             case Screens.TAB:
                 return new TabFragment();

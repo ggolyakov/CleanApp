@@ -17,11 +17,11 @@ public class TabPresenter extends BasePresenter<ITabView> {
 
     @Inject
     @Local
-    Router router;
+    protected Router router;
 
     @Inject
     @Global
-    Router globalRouter;
+    protected Router globalRouter;
 
     public TabPresenter() {
         ComponentManager.getInstance().getAppComponent().inject(this);

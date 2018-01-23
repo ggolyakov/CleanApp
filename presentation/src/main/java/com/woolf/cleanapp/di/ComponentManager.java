@@ -1,6 +1,8 @@
 package com.woolf.cleanapp.di;
 
 
+import android.support.annotation.VisibleForTesting;
+
 import com.woolf.cleanapp.CleanApplication;
 import com.woolf.cleanapp.di.app.AppComponent;
 import com.woolf.cleanapp.di.app.DaggerAppComponent;
@@ -24,6 +26,10 @@ public class ComponentManager {
 
     public void initAppComponent(CleanApplication application) {
         appComponent = DaggerAppComponent.builder().contextModule(new ContextModule(application)).build();
+    }
+    @VisibleForTesting
+    public void setAppComponent(AppComponent appComponent){
+        this.appComponent = appComponent;
     }
 
     public AppComponent getAppComponent() {

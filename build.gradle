@@ -31,13 +31,13 @@ allprojects {
         versionName = "1.0"
 
 
-        support = "26.1.0"
+        support = "27.0.2"
         moxy = "1.5.3"
         moxyCompiler = "1.5.3"
         moxyAppCompat = "1.5.3"
         constraint = "1.0.2"
         fresco = "1.5.0"
-        cicerone = "2.1.0"
+        cicerone = "3.0.0"
         butterknife = "8.8.1"
         dagger2 = "2.11"
         rxJava = "2.1.7"
@@ -45,6 +45,7 @@ allprojects {
         retrofit = "2.3.0"
         retrofitRxAdapter = "1.0.0"
         junit = "4.12"
+        mockito = "2.10.0"
         testRunner = "1.0.1"
         espresso = "3.0.1"
     }
